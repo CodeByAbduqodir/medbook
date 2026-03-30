@@ -35,12 +35,15 @@
 2. [x] Pint форматирование
 3. [x] Прогон всего test suite (55 passed, 115 assertions)
 
-### Этап 5: Orchid Admin Panel
-1. [ ] Установка Orchid
-2. [ ] Dashboard экран со статистикой
-3. [ ] CRUD: Users, Doctors, Specializations, Appointments, Reviews
-4. [ ] Модерация отзывов
-5. [ ] Настройки системы
+### Этап 5: Orchid Admin Panel — ✅ ВЫПОЛНЕНО
+1. [x] Установка Orchid (v14.53)
+2. [x] DashboardScreen со статистикой (8 метрик)
+3. [x] UserListScreen + UserEditScreen (встроенный Orchid)
+4. [x] DoctorListScreen (специализация, рейтинг, кол-во записей)
+5. [x] AppointmentListScreen (фильтр по статусу, отмена)
+6. [x] ReviewListScreen (approve/hide/delete)
+7. [x] SpecializationListScreen + SpecializationEditScreen (CRUD)
+8. [x] Admin: admin@medbook.test / password
 
 ### Этап 6: Frontend (Next.js) — ~третий
 1. [ ] Инициализация Next.js проекта
@@ -105,6 +108,6 @@
 - [x] Врач видит записи в расписании
 - [x] Врач выписывает рецепт после приёма
 - [x] Пациент просматривает рецепты в личном кабинете
-- [ ] Админ управляет всем через Orchid
+- [x] Админ управляет всем через Orchid
 - [x] Код проходит Pint + тесты
 - [x] БД нормализована до 3НФ
