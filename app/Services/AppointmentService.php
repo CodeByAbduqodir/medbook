@@ -12,6 +12,7 @@ use App\Notifications\AppointmentCreatedNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Validation\ValidationException;
 
 class AppointmentService
 {
@@ -24,7 +25,9 @@ class AppointmentService
             $endTime = $startTime->copy()->addMinutes($durationMinutes);
 
             if (! $this->slotService->isSlotAvailable($doctor, $startTime, $endTime)) {
-                throw new \RuntimeException('This time slot is not available.');
+                throw ValidationException::withMessages([
+                    'start_time' => ['This time slot is not available.'],
+                ]);
             }
 
             return Appointment::create([

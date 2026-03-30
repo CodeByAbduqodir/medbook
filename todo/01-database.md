@@ -1,106 +1,106 @@
 # MedBook — База данных и модели
 
-## Фаза 1: Настройка PostgreSQL
+## Фаза 1: Настройка PostgreSQL ✅
 
-- [ ] Установить и настроить PostgreSQL (`.env` — DB_CONNECTION=pgsql)
-- [ ] Проверить подключение через `php artisan migrate`
+- [x] Установить и настроить PostgreSQL (`.env` — DB_CONNECTION=pgsql)
+- [x] Проверить подключение через `php artisan migrate`
 
 ---
 
-## Фаза 2: Миграции (в порядке создания)
+## Фаза 2: Миграции (в порядке создания) ✅
 
 ### 2.1 Расширение таблицы `users`
-- [ ] Добавить поле `role` (enum: `patient`, `doctor`, `admin`), default = `patient`
+- [x] Добавить поле `role` (enum: `patient`, `doctor`, `admin`), default = `patient`
 
 ### 2.2 Таблица `profiles`
-- [ ] `id`, `user_id` (FK → users, unique), `phone`, `birth_date`, `address`, `avatar`
-- [ ] Индекс на `user_id`
+- [x] `id`, `user_id` (FK → users, unique), `phone`, `birth_date`, `address`, `avatar`
+- [x] Индекс на `user_id`
 
 ### 2.3 Таблица `specializations`
-- [ ] `id`, `name` (unique), `description` (nullable)
+- [x] `id`, `name` (unique), `description` (nullable)
 
 ### 2.4 Таблица `doctor_profiles`
-- [ ] `id`, `user_id` (FK → users, unique), `specialization_id` (FK → specializations)
-- [ ] `experience_years` (smallint), `bio` (text, nullable), `rating_avg` (decimal 3,2, default 0)
-- [ ] Индексы: `specialization_id`, `rating_avg`
+- [x] `id`, `user_id` (FK → users, unique), `specialization_id` (FK → specializations)
+- [x] `experience_years` (smallint), `bio` (text, nullable), `rating_avg` (decimal 3,2, default 0)
+- [x] Индексы: `specialization_id`, `rating_avg`
 
 ### 2.5 Таблица `schedules`
-- [ ] `id`, `doctor_id` (FK → users), `day_of_week` (tinyint 0-6), `start_time` (time), `end_time` (time), `is_active` (bool, default true)
-- [ ] Уникальный составной индекс: (`doctor_id`, `day_of_week`)
+- [x] `id`, `doctor_id` (FK → users), `day_of_week` (tinyint 0-6), `start_time` (time), `end_time` (time), `is_active` (bool, default true)
+- [x] Уникальный составной индекс: (`doctor_id`, `day_of_week`)
 
 ### 2.6 Таблица `appointments`
-- [ ] `id`, `doctor_id` (FK → users), `patient_id` (FK → users)
-- [ ] `start_time` (datetime), `end_time` (datetime)
-- [ ] `status` (enum: `pending`, `confirmed`, `completed`, `cancelled`), default = `pending`
-- [ ] `diagnosis` (text, nullable)
-- [ ] `cancelled_by` (FK → users, nullable)
-- [ ] Индексы: (`doctor_id`, `start_time`), (`patient_id`, `start_time`), `status`
+- [x] `id`, `doctor_id` (FK → users), `patient_id` (FK → users)
+- [x] `start_time` (datetime), `end_time` (datetime)
+- [x] `status` (enum: `pending`, `confirmed`, `completed`, `cancelled`), default = `pending`
+- [x] `diagnosis` (text, nullable)
+- [x] `cancelled_by` (FK → users, nullable)
+- [x] Индексы: (`doctor_id`, `start_time`), (`patient_id`, `start_time`), `status`
 
 ### 2.7 Таблица `prescriptions`
-- [ ] `id`, `appointment_id` (FK → appointments)
-- [ ] `medicine_name`, `dosage`, `instructions` (text), `duration` (string)
-- [ ] Индекс на `appointment_id`
+- [x] `id`, `appointment_id` (FK → appointments)
+- [x] `medicine_name`, `dosage`, `instructions` (text), `duration` (string)
+- [x] Индекс на `appointment_id`
 
 ### 2.8 Таблица `reviews`
-- [ ] `id`, `appointment_id` (FK → appointments, unique)
-- [ ] `rating` (tinyint 1-5), `comment` (text, nullable), `is_approved` (bool, default false)
-- [ ] Индексы: `appointment_id`, `is_approved`
+- [x] `id`, `appointment_id` (FK → appointments, unique)
+- [x] `rating` (tinyint 1-5), `comment` (text, nullable), `is_approved` (bool, default false)
+- [x] Индексы: `appointment_id`, `is_approved`
 
 ---
 
-## Фаза 3: Модели и связи
+## Фаза 3: Модели и связи ✅
 
 ### 3.1 User
-- [ ] `role` — cast к enum `UserRole`
-- [ ] Связи: `hasOne(Profile)`, `hasOne(DoctorProfile)`, `hasMany(Appointment, 'patient_id')`, `hasMany(Appointment, 'doctor_id')`
-- [ ] Скоупы: `scopePatients()`, `scopeDoctors()`, `scopeAdmins()`
-- [ ] Helper: `isPatient()`, `isDoctor()`, `isAdmin()`
+- [x] `role` — cast к enum `UserRole`
+- [x] Связи: `hasOne(Profile)`, `hasOne(DoctorProfile)`, `hasMany(Appointment, 'patient_id')`, `hasMany(Appointment, 'doctor_id')`
+- [x] Скоупы: `scopePatients()`, `scopeDoctors()`, `scopeAdmins()`
+- [x] Helper: `isPatient()`, `isDoctor()`, `isAdmin()`
 
 ### 3.2 Profile
-- [ ] `belongsTo(User)`
+- [x] `belongsTo(User)`
 
 ### 3.3 Specialization
-- [ ] `hasMany(DoctorProfile)`
+- [x] `hasMany(DoctorProfile)`
 
 ### 3.4 DoctorProfile
-- [ ] `belongsTo(User)`, `belongsTo(Specialization)`, `hasMany(Schedule, 'doctor_id', 'user_id')`
-- [ ] Метод `recalculateRating()` — пересчитывает `rating_avg` на основе approved reviews
+- [x] `belongsTo(User)`, `belongsTo(Specialization)`, `hasMany(Schedule, 'doctor_id', 'user_id')`
+- [x] Метод `recalculateRating()` — пересчитывает `rating_avg` на основе approved reviews
 
 ### 3.5 Schedule
-- [ ] `belongsTo(User, 'doctor_id')`
-- [ ] Метод `generateSlots(date, durationMinutes)` — возвращает массив свободных слотов
+- [x] `belongsTo(User, 'doctor_id')`
+- [x] Метод `generateSlots(date, durationMinutes)` — возвращает массив свободных слотов
 
 ### 3.6 Appointment
-- [ ] `belongsTo(User, 'doctor_id')`, `belongsTo(User, 'patient_id')`
-- [ ] `hasMany(Prescription)`, `hasOne(Review)`
-- [ ] Cast `status` к enum `AppointmentStatus`
+- [x] `belongsTo(User, 'doctor_id')`, `belongsTo(User, 'patient_id')`
+- [x] `hasMany(Prescription)`, `hasOne(Review)`
+- [x] Cast `status` к enum `AppointmentStatus`
 
 ### 3.7 Prescription
-- [ ] `belongsTo(Appointment)`
+- [x] `belongsTo(Appointment)`
 
 ### 3.8 Review
-- [ ] `belongsTo(Appointment)`
-- [ ] Observer: при создании/обновлении/удалении → пересчитать `rating_avg` врача
+- [x] `belongsTo(Appointment)`
+- [x] Observer: при создании/обновлении/удалении → пересчитать `rating_avg` врача
 
 ---
 
-## Фаза 4: Seeders и Factories
+## Фаза 4: Seeders и Factories ✅
 
-- [ ] `SpecializationSeeder` — 10-15 базовых специальностей (Терапевт, Хирург, Кардиолог и т.д.)
-- [ ] `UserFactory` — состояния: `patient()`, `doctor()`, `admin()`
-- [ ] `ProfileFactory`
-- [ ] `DoctorProfileFactory`
-- [ ] `ScheduleFactory`
-- [ ] `AppointmentFactory` — состояния: `pending()`, `confirmed()`, `completed()`, `cancelled()`
-- [ ] `PrescriptionFactory`
-- [ ] `ReviewFactory`
-- [ ] `DatabaseSeeder` — демо данные: 3 врача, 10 пациентов, расписания, записи, рецепты, отзывы
+- [x] `SpecializationSeeder` — 15 базовых специальностей (Терапевт, Хирург, Кардиолог и т.д.)
+- [x] `UserFactory` — состояния: `patient()`, `doctor()`, `admin()`
+- [x] `ProfileFactory`
+- [x] `DoctorProfileFactory`
+- [x] `ScheduleFactory`
+- [x] `AppointmentFactory` — состояния: `pending()`, `confirmed()`, `completed()`, `cancelled()`
+- [x] `PrescriptionFactory`
+- [x] `ReviewFactory`
+- [x] `DatabaseSeeder` — демо данные: 3 врача, 10 пациентов, расписания, записи, рецепты, отзывы
 
 ---
 
-## Фаза 5: Индексы и оптимизация
+## Фаза 5: Индексы и оптимизация ✅
 
-- [ ] Проверить, что все FK имеют индексы
-- [ ] Составной индекс на `appointments` (`doctor_id`, `start_time`, `status`) — для быстрого поиска свободных слотов
-- [ ] Индекс на `reviews` (`is_approved`) — для расчёта рейтинга
-- [ ] Проверить нормализацию до 3НФ
+- [x] Проверить, что все FK имеют индексы
+- [x] Составной индекс на `appointments` (`doctor_id`, `start_time`, `status`) — для быстрого поиска свободных слотов
+- [x] Индекс на `reviews` (`is_approved`) — для расчёта рейтинга
+- [x] Проверить нормализацию до 3НФ
