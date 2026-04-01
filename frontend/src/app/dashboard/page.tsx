@@ -1,0 +1,178 @@
+"use client";
+
+import React, { useMemo } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Calendar, FileText, UserCircle, Clock, ArrowRight, Star } from "lucide-react";
+import { useAuth } from "@/lib/auth";
+import { usePatientAppointments } from "@/hooks/useAppointments";
+import { usePatientPrescriptions } from "@/hooks/usePrescriptions";
+import { PageTransition } from "@/components/layout/PageTransition";
+import { Card } from "@/components/ui/Card";
+import { StatusBadge } from "@/components/ui/Badge";
+import { Avatar } from "@/components/ui/Avatar";
+import { Button } from "@/components/ui/Button";
+import { AppointmentCardSkeleton } from "@/components/ui/Skeleton";
+import { formatDateTime, formatRelative } from "@/lib/utils";
+import type { Appointment } from "@/lib/types";
+
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 6) return "Доброй ночи";
+  if (h < 12) return "Доброе утро";
+  if (h < 18) return "Добрый день";
+  return "Добрый вечер";
+}
+
+function QuickCard({
+  icon, label, description, href, color,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  description: string;
+  href: string;
+  color: string;
+}) {
+  return (
+    <Link href={href}>
+      <div className="group flex items-center gap-4 p-5 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 card-shadow hover:card-shadow-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+        <div className={`w-12 h-12 rounded-xl ${color} flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+          {icon}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-gray-900 dark:text-white text-sm">{label}</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{description}</p>
+        </div>
+        <ArrowRight size={16} className="text-gray-300 dark:text-gray-600 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-200" />
+      </div>
+    </Link>
+  );
+}
+
+function UpcomingCard({ appointment }: { appointment: Appointment }) {
+  const doctor = appointment.doctor;
+  const spec = doctor?.doctor_profile?.specialization;
+  return (
+    <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-primary-50 to-teal-50 dark:from-primary-950/30 dark:to-teal-950/30 rounded-2xl border border-primary-100 dark:border-primary-900">
+      <Avatar name={doctor?.name ?? "?"} size="lg" src={doctor?.profile?.avatar_url} />
+      <div className="flex-1 min-w-0">
+        <p className="font-semibold text-gray-900 dark:text-white text-sm truncate">{doctor?.name}</p>
+        <p className="text-xs text-teal-600 dark:text-teal-400">{spec?.name}</p>
+        <div className="flex items-center gap-1.5 mt-1.5 text-xs text-gray-500 dark:text-gray-400">
+          <Clock size={12} />
+          <span>{formatDateTime(appointment.start_time)}</span>
+        </div>
+      </div>
+      <StatusBadge status={appointment.status} />
+    </div>
+  );
+}
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
+
+export default function PatientDashboard() {
+  const { user } = useAuth();
+  const { data: appointments, isLoading: apptLoading } = usePatientAppointments({ status: "confirmed,pending" });
+  const { data: prescriptions } = usePatientPrescriptions();
+
+  const upcoming = useMemo(
+    () => appointments?.filter((a) => a.status === "confirmed" || a.status === "pending")
+      .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())
+      .slice(0, 3) ?? [],
+    [appointments]
+  );
+
+  return (
+    <PageTransition>
+      <div className="max-w-3xl mx-auto">
+        {/* Greeting */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8"
+        >
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{getGreeting()},</p>
+          <h1 className="text-2xl sm:text-3xl font-display font-bold text-gray-900 dark:text-white">
+            {user?.name?.split(" ")[0]} 👋
+          </h1>
+        </motion.div>
+
+        {/* Stats row */}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8"
+        >
+          {[
+            { label: "Предстоящих записей", value: upcoming.length, color: "text-primary-600 dark:text-primary-400" },
+            { label: "Рецептов", value: prescriptions?.length ?? 0, color: "text-teal-600 dark:text-teal-400" },
+            { label: "Всего записей", value: appointments?.length ?? 0, color: "text-gray-700 dark:text-gray-300" },
+          ].map(({ label, value, color }) => (
+            <motion.div key={label} variants={item}>
+              <Card padding="md" className="text-center">
+                <p className={`text-3xl font-display font-bold ${color} mb-1`}>{value}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{label}</p>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Upcoming appointments */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mb-8"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-display font-semibold text-gray-900 dark:text-white">Предстоящие записи</h2>
+            <Link href="/dashboard/appointments" className="text-xs text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1">
+              Все <ArrowRight size={12} />
+            </Link>
+          </div>
+          {apptLoading ? (
+            <div className="flex flex-col gap-3">
+              {Array.from({ length: 2 }).map((_, i) => <AppointmentCardSkeleton key={i} />)}
+            </div>
+          ) : upcoming.length === 0 ? (
+            <div className="text-center py-10 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800">
+              <Calendar size={32} className="mx-auto text-gray-300 dark:text-gray-600 mb-3" />
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">Нет предстоящих записей</p>
+              <Link href="/doctors">
+                <Button variant="primary" size="sm">Найти врача</Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-3">
+              {upcoming.map((a) => <UpcomingCard key={a.id} appointment={a} />)}
+            </div>
+          )}
+        </motion.div>
+
+        {/* Quick links */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <h2 className="font-display font-semibold text-gray-900 dark:text-white mb-4">Быстрые действия</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <QuickCard icon={<Calendar size={22} />} label="Найти врача" description="Записаться на приём" href="/doctors" color="bg-gradient-to-br from-primary-500 to-primary-600" />
+            <QuickCard icon={<FileText size={22} />} label="Мои рецепты" description="Посмотреть назначения" href="/dashboard/prescriptions" color="bg-gradient-to-br from-teal-500 to-teal-600" />
+            <QuickCard icon={<Star size={22} />} label="История визитов" description="Прошедшие записи" href="/dashboard/appointments" color="bg-gradient-to-br from-amber-500 to-amber-600" />
+            <QuickCard icon={<UserCircle size={22} />} label="Мой профиль" description="Настройки аккаунта" href="/dashboard/profile" color="bg-gradient-to-br from-purple-500 to-purple-600" />
+          </div>
+        </motion.div>
+      </div>
+    </PageTransition>
+  );
+}

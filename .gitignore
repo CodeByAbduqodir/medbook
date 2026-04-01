@@ -22,3 +22,11 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Frontend (Next.js) specific
+frontend/.next/
+frontend/.turbo/
+frontend/out/
+frontend/coverage/
+frontend/.env.local
+frontend/next-env.d.ts

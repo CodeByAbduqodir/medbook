@@ -1,0 +1,225 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand colors */
+  --color-primary-50: oklch(0.97 0.02 250);
+  --color-primary-100: oklch(0.93 0.05 250);
+  --color-primary-200: oklch(0.87 0.10 250);
+  --color-primary-300: oklch(0.78 0.15 250);
+  --color-primary-400: oklch(0.67 0.20 250);
+  --color-primary-500: oklch(0.55 0.24 250);
+  --color-primary-600: oklch(0.47 0.24 250);
+  --color-primary-700: oklch(0.40 0.22 250);
+  --color-primary-800: oklch(0.34 0.18 250);
+  --color-primary-900: oklch(0.28 0.14 250);
+  --color-primary-950: oklch(0.20 0.10 250);
+
+  /* Teal/Mint accent */
+  --color-teal-50: oklch(0.97 0.02 185);
+  --color-teal-100: oklch(0.93 0.05 185);
+  --color-teal-200: oklch(0.87 0.10 185);
+  --color-teal-300: oklch(0.80 0.15 185);
+  --color-teal-400: oklch(0.70 0.18 185);
+  --color-teal-500: oklch(0.60 0.18 185);
+  --color-teal-600: oklch(0.50 0.16 185);
+  --color-teal-700: oklch(0.43 0.14 185);
+  --color-teal-800: oklch(0.37 0.11 185);
+  --color-teal-900: oklch(0.31 0.09 185);
+
+  /* Mint success */
+  --color-mint-400: oklch(0.82 0.16 160);
+  --color-mint-500: oklch(0.74 0.18 160);
+  --color-mint-600: oklch(0.64 0.17 160);
+
+  /* Fonts */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Syne", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Radius */
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px -4px rgba(0, 0, 0, 0.08), 0 2px 8px -2px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 12px 40px -8px rgba(0, 0, 0, 0.14), 0 4px 16px -4px rgba(0, 0, 0, 0.08);
+  --shadow-glow-primary: 0 0 40px -8px oklch(0.55 0.24 250 / 0.4);
+  --shadow-glow-teal: 0 0 40px -8px oklch(0.60 0.18 185 / 0.4);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  * {
+    @apply border-gray-200 dark:border-gray-800;
+  }
+
+  body {
+    @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-primary-100 dark:bg-primary-900 text-primary-900 dark:text-primary-100;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-600;
+  }
+}
+
+@layer utilities {
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary-600 to-teal-500 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-blue-teal {
+    @apply bg-gradient-to-r from-blue-600 via-primary-600 to-teal-500 bg-clip-text text-transparent;
+  }
+
+  .bg-gradient-primary {
+    @apply bg-gradient-to-br from-primary-600 to-teal-500;
+  }
+
+  .bg-gradient-card {
+    @apply bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-950;
+  }
+
+  .glass {
+    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-white/20 dark:border-gray-700/30;
+  }
+
+  .glass-dark {
+    @apply bg-gray-900/80 backdrop-blur-xl border border-gray-700/30;
+  }
+
+  .card-shadow {
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-shadow-hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .glow-primary {
+    box-shadow: var(--shadow-glow-primary);
+  }
+
+  .glow-teal {
+    box-shadow: var(--shadow-glow-teal);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out 2s infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 8s ease-in-out 1s infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-blob {
+    animation: blob 12s ease-in-out infinite;
+  }
+
+  .animate-blob-delayed {
+    animation: blob 14s ease-in-out 4s infinite;
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  .hero-bg {
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 40%, oklch(0.55 0.24 250 / 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 70% at 85% 30%, oklch(0.60 0.18 185 / 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 90% 50% at 50% 100%, oklch(0.55 0.24 250 / 0.06) 0%, transparent 50%);
+  }
+
+  .dark .hero-bg {
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 40%, oklch(0.47 0.24 250 / 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 70% at 85% 30%, oklch(0.50 0.16 185 / 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 90% 50% at 50% 100%, oklch(0.40 0.22 250 / 0.10) 0%, transparent 50%);
+  }
+
+  .gradient-border {
+    position: relative;
+    border-radius: 1rem;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, oklch(0.55 0.24 250), oklch(0.60 0.18 185));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 1px;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-16px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes draw-line {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes blob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: scale(1) rotate(0deg); }
+  33%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: scale(1.05) rotate(60deg); }
+  66%       { border-radius: 50% 60% 30% 70% / 40% 40% 60% 50%; transform: scale(0.97) rotate(120deg); }
+}
