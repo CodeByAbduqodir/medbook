@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Calendar, FileText, UserCircle, Clock, ArrowRight, Star } from "lucide-react";
+import { Calendar, FileText, UserCircle, Clock, ArrowRight, Star, Timer } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { usePatientAppointments } from "@/hooks/useAppointments";
 import { usePatientPrescriptions } from "@/hooks/usePrescriptions";
@@ -13,8 +13,59 @@ import { StatusBadge } from "@/components/ui/Badge";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { AppointmentCardSkeleton } from "@/components/ui/Skeleton";
-import { formatDateTime, formatRelative } from "@/lib/utils";
+import { formatDateTime } from "@/lib/utils";
 import type { Appointment } from "@/lib/types";
+
+function CountdownTimer({ targetTime }: { targetTime: string }) {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const update = () => {
+      const now = new Date().getTime();
+      const target = new Date(targetTime).getTime();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setTimeLeft({ days, hours, minutes, seconds });
+    };
+
+    update();
+    const interval = setInterval(update, 1000);
+    return () => clearInterval(interval);
+  }, [targetTime]);
+
+  if (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0) {
+    return null;
+  }
+
+  const TimeBlock = ({ value, label }: { value: number; label: string }) => (
+    <div className="bg-white dark:bg-gray-800 rounded-lg px-2.5 py-1.5 min-w-[48px] text-center shadow-sm">
+      <p className="text-lg font-bold text-primary-600 dark:text-primary-400 font-mono">{String(value).padStart(2, '0')}</p>
+      <p className="text-[10px] uppercase tracking-wide text-gray-500 dark:text-gray-400">{label}</p>
+    </div>
+  );
+
+  return (
+    <div className="flex items-center gap-2 mt-3">
+      <Timer size={14} className="text-primary-500" />
+      <div className="flex gap-1.5">
+        {timeLeft.days > 0 && <TimeBlock value={timeLeft.days} label="дн" />}
+        <TimeBlock value={timeLeft.hours} label="ч" />
+        <TimeBlock value={timeLeft.minutes} label="м" />
+        <TimeBlock value={timeLeft.seconds} label="с" />
+      </div>
+    </div>
+  );
+}
 
 function getGreeting() {
   const h = new Date().getHours();
@@ -49,11 +100,11 @@ function QuickCard({
   );
 }
 
-function UpcomingCard({ appointment }: { appointment: Appointment }) {
+function UpcomingCard({ appointment, showCountdown }: { appointment: Appointment; showCountdown?: boolean }) {
   const doctor = appointment.doctor;
   const spec = doctor?.doctor_profile?.specialization;
   return (
-    <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-primary-50 to-teal-50 dark:from-primary-950/30 dark:to-teal-950/30 rounded-2xl border border-primary-100 dark:border-primary-900">
+    <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-primary-50 to-teal-50 dark:from-primary-950/30 dark:to-teal-950/30 rounded-2xl border border-primary-100 dark:border-primary-900">
       <Avatar name={doctor?.name ?? "?"} size="lg" src={doctor?.profile?.avatar_url} />
       <div className="flex-1 min-w-0">
         <p className="font-semibold text-gray-900 dark:text-white text-sm truncate">{doctor?.name}</p>
@@ -62,6 +113,7 @@ function UpcomingCard({ appointment }: { appointment: Appointment }) {
           <Clock size={12} />
           <span>{formatDateTime(appointment.start_time)}</span>
         </div>
+        {showCountdown && <CountdownTimer targetTime={appointment.start_time} />}
       </div>
       <StatusBadge status={appointment.status} />
     </div>
@@ -153,7 +205,9 @@ export default function PatientDashboard() {
             </div>
           ) : (
             <div className="flex flex-col gap-3">
-              {upcoming.map((a) => <UpcomingCard key={a.id} appointment={a} />)}
+              {upcoming.map((a, i) => (
+                <UpcomingCard key={a.id} appointment={a} showCountdown={i === 0 && (a.status === "confirmed" || a.status === "pending")} />
+              ))}
             </div>
           )}
         </motion.div>

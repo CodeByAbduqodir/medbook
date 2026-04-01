@@ -18,6 +18,7 @@ import { Modal } from "@/components/ui/Modal";
 import { Input } from "@/components/ui/Input";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { AppointmentCardSkeleton } from "@/components/ui/Skeleton";
+import { SuccessAnimation } from "@/components/ui/SuccessAnimation";
 import { formatDateTime } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import type { Appointment } from "@/lib/types";
@@ -137,6 +138,7 @@ export default function DoctorAppointmentsPage() {
   const [cancelId, setCancelId] = useState<number | null>(null);
   const [prescriptionAppt, setPrescriptionAppt] = useState<Appointment | null>(null);
   const [prescription, setPrescription] = useState({ medicine_name: "", dosage: "", instructions: "", duration: "" });
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const { data: appointments, isLoading } = useDoctorAppointments();
   const confirmMutation = useConfirmAppointment();
@@ -209,7 +211,12 @@ export default function DoctorAppointmentsPage() {
             fullWidth
             isLoading={completeMutation.isPending}
             disabled={!diagnosis.trim()}
-            onClick={async () => { if (!completeId) return; await completeMutation.mutateAsync({ id: completeId, diagnosis }); setCompleteId(null); }}
+            onClick={async () => { 
+              if (!completeId) return; 
+              await completeMutation.mutateAsync({ id: completeId, diagnosis }); 
+              setCompleteId(null);
+              setShowSuccess(true);
+            }}
           >
             Завершить
           </Button>
@@ -251,12 +258,16 @@ export default function DoctorAppointmentsPage() {
               if (!prescriptionAppt) return;
               await prescriptionMutation.mutateAsync({ appointmentId: prescriptionAppt.id, data: prescription });
               setPrescriptionAppt(null);
+              setShowSuccess(true);
             }}
           >
             Выписать рецепт
           </Button>
         </div>
       </Modal>
+
+      {/* Success animation */}
+      <SuccessAnimation show={showSuccess} message="Приём завершён!" />
     </PageTransition>
   );
 }
