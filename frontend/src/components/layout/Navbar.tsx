@@ -23,8 +23,8 @@ import { Avatar } from "@/components/ui/Avatar";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const navLinks = [
-  { href: "/doctors", label: "Врачи" },
-  { href: "/about", label: "О сервисе" },
+  { href: "/doctors", label: "Shifokorlar" },
+  { href: "/about", label: "Xizmat haqida" },
 ];
 
 export function Navbar() {
@@ -131,14 +131,14 @@ export function Navbar() {
                               <UserMenuItem
                                 href={dashboardHref}
                                 icon={<Calendar size={15} />}
-                                label="Мой кабинет"
+                                label="Kabinetim"
                                 onClick={() => setIsUserMenuOpen(false)}
                               />
                               {user.role === "doctor" && (
                                 <UserMenuItem
                                   href="/doctor/profile"
                                   icon={<Stethoscope size={15} />}
-                                  label="Профиль врача"
+                                  label="Shifokor profili"
                                   onClick={() => setIsUserMenuOpen(false)}
                                 />
                               )}
@@ -146,14 +146,14 @@ export function Navbar() {
                                 <UserMenuItem
                                   href="/dashboard/prescriptions"
                                   icon={<FileText size={15} />}
-                                  label="Мои рецепты"
+                                  label="Retseptlarim"
                                   onClick={() => setIsUserMenuOpen(false)}
                                 />
                               )}
                               <UserMenuItem
                                 href={user.role === "doctor" ? "/doctor/profile" : "/dashboard/profile"}
                                 icon={<Settings size={15} />}
-                                label="Настройки"
+                                label="Sozlamalar"
                                 onClick={() => setIsUserMenuOpen(false)}
                               />
                             </div>
@@ -166,7 +166,7 @@ export function Navbar() {
                                 className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors duration-150"
                               >
                                 <LogOut size={15} />
-                                Выйти
+                                Chiqish
                               </button>
                             </div>
                           </motion.div>
@@ -178,12 +178,12 @@ export function Navbar() {
                   <>
                     <Link href="/login">
                       <Button variant="ghost" size="sm">
-                        Войти
+                        Kirish
                       </Button>
                     </Link>
                     <Link href="/register">
                       <Button variant="gradient" size="sm">
-                        Записаться
+                        Ro'yxatdan o'tish
                       </Button>
                     </Link>
                   </>
@@ -232,7 +232,7 @@ export function Navbar() {
                   <>
                     <Link href={dashboardHref}>
                       <Button variant="outline" fullWidth leftIcon={<User size={15} />}>
-                        Мой кабинет
+                        Kabinetim
                       </Button>
                     </Link>
                     <Button
@@ -242,19 +242,19 @@ export function Navbar() {
                       onClick={logout}
                       className="text-red-600 dark:text-red-400"
                     >
-                      Выйти
+                      Chiqish
                     </Button>
                   </>
                 ) : (
                   <>
                     <Link href="/login">
                       <Button variant="outline" fullWidth>
-                        Войти
+                        Kirish
                       </Button>
                     </Link>
                     <Link href="/register">
                       <Button variant="gradient" fullWidth>
-                        Записаться
+                        Ro'yxatdan o'tish
                       </Button>
                     </Link>
                   </>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -14,8 +14,8 @@ import { Input } from "@/components/ui/Input";
 import toast from "react-hot-toast";
 
 const schema = z.object({
-  email: z.string().email("Некорректный email"),
-  password: z.string().min(1, "Введите пароль"),
+  email: z.string().email("Noto'g'ri email"),
+  password: z.string().min(1, "Parolni kiriting"),
 });
 type FormData = z.infer<typeof schema>;
 
@@ -30,8 +30,13 @@ export default function LoginPage() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/dashboard");
+    }
+  }, [isAuthenticated, router]);
+
   if (isAuthenticated) {
-    router.replace("/dashboard");
     return null;
   }
 
@@ -40,14 +45,14 @@ export default function LoginPage() {
       await login(data.email, data.password);
       router.push("/dashboard");
     } catch {
-      toast.error("Неверный email или пароль");
+      toast.error("Email yoki parol noto'g'ri");
     }
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2">
+    <div className="min-h-screen grid lg:grid-cols-2 bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300">
       {/* Left: Form */}
-      <div className="flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-12">
+      <div className="flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-12 bg-white dark:bg-gray-950">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -63,10 +68,10 @@ export default function LoginPage() {
           </Link>
 
           <h1 className="text-3xl font-display font-bold text-gray-900 dark:text-white mb-2">
-            С возвращением
+            Xush kelibsiz
           </h1>
           <p className="text-gray-500 dark:text-gray-400 mb-8">
-            Войдите в аккаунт, чтобы управлять записями
+            Qabul va yozuvlarni boshqarish uchun akkauntga kiring
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -81,9 +86,9 @@ export default function LoginPage() {
 
             <div>
               <Input
-                label="Пароль"
+                label="Parol"
                 type={showPassword ? "text" : "password"}
-                placeholder="Введите пароль"
+                placeholder="Parolni kiriting"
                 leftIcon={<Lock size={16} />}
                 rightIcon={
                   <button
@@ -108,24 +113,24 @@ export default function LoginPage() {
               rightIcon={<ArrowRight size={18} />}
               className="mt-2"
             >
-              Войти
+              Kirish
             </Button>
           </form>
 
           <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
-            Нет аккаунта?{" "}
+            Akkauntingiz yo'qmi?{" "}
             <Link
               href="/register"
               className="font-medium text-primary-600 dark:text-primary-400 hover:underline"
             >
-              Зарегистрироваться
+              Ro'yxatdan o'tish
             </Link>
           </p>
         </motion.div>
       </div>
 
       {/* Right: Decoration */}
-      <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-primary-600 via-primary-700 to-teal-600 relative overflow-hidden">
+      <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-primary-500 via-primary-600 to-teal-500 relative overflow-hidden">
         {/* Pattern */}
         <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%">
@@ -152,17 +157,17 @@ export default function LoginPage() {
             <Heart size={36} className="text-white" fill="white" />
           </div>
           <h2 className="text-2xl font-display font-bold mb-4">
-            Ваш здоровый выбор
+            Sog'lig'ingiz uchun to'g'ri tanlov
           </h2>
           <p className="text-white/80 text-sm leading-relaxed">
-            Запишитесь к лучшим врачам, получите онлайн-консультацию и
-            храните все рецепты в одном месте.
+            Eng yaxshi shifokorlarga yoziling, onlayn maslahat oling va
+            barcha retseptlarni bitta joyda saqlang.
           </p>
 
           {/* Social proof */}
           <div className="mt-8 flex items-center justify-center gap-2">
             <div className="flex -space-x-2">
-              {["АИ", "РК", "НХ", "МС"].map((init) => (
+              {["AI", "RK", "NX", "MS"].map((init) => (
                 <div
                   key={init}
                   className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-sm border-2 border-white/50 flex items-center justify-center text-xs font-semibold"
@@ -171,7 +176,7 @@ export default function LoginPage() {
                 </div>
               ))}
             </div>
-            <span className="text-sm text-white/80">+1200 пациентов</span>
+            <span className="text-sm text-white/80">+1200 bemor</span>
           </div>
         </motion.div>
       </div>

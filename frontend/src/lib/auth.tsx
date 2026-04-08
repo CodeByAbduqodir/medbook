@@ -8,7 +8,7 @@ import React, {
   useCallback,
 } from "react";
 import { authApi } from "@/lib/api";
-import type { AuthUser } from "@/lib/types";
+import type { AuthResponse, AuthUser } from "@/lib/types";
 
 interface AuthContextValue {
   user: AuthUser | null;
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = useCallback(
     async (email: string, password: string) => {
       const res = await authApi.login({ email, password });
-      const { token: newToken, user: newUser } = res.data.data;
+      const { token: newToken, data: newUser } = res.data as AuthResponse;
       localStorage.setItem("medbook_token", newToken);
       localStorage.setItem("medbook_user", JSON.stringify(newUser));
       setToken(newToken);
@@ -64,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       role?: string;
     }) => {
       const res = await authApi.register(data);
-      const { token: newToken, user: newUser } = res.data.data;
+      const { token: newToken, data: newUser } = res.data as AuthResponse;
       localStorage.setItem("medbook_token", newToken);
       localStorage.setItem("medbook_user", JSON.stringify(newUser));
       setToken(newToken);

@@ -17,7 +17,7 @@ class DoctorListScreen extends Screen
         return [
             'doctors' => User::where('role', UserRole::Doctor)
                 ->with(['doctorProfile.specialization'])
-                ->withCount('doctorAppointments as appointments_count')
+                ->withCount(['doctorAppointments as appointments_count'])
                 ->orderByDesc('id')
                 ->paginate(),
         ];

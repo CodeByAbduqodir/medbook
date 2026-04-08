@@ -27,6 +27,14 @@ class DatabaseSeeder extends Seeder
         ]);
         Profile::factory()->create(['user_id' => $admin->id]);
 
+        // Grant admin all platform permissions
+        $admin->update([
+            'permissions' => [
+                'platform.systems.roles',
+                'platform.systems.users',
+            ],
+        ]);
+
         $specializations = Specialization::all();
 
         // 3 doctors with full profiles and schedules

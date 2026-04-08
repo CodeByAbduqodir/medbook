@@ -9,12 +9,12 @@ import { Avatar } from "@/components/ui/Avatar";
 import { cn } from "@/lib/utils";
 
 const FLOATING_DOCTORS = [
-  { name: "Алия Иманова", specialty: "Кардиолог", rating: 4.9, exp: 12 },
-  { name: "Рустам Каримов", specialty: "Невролог", rating: 4.8, exp: 8 },
-  { name: "Нилуфар Ходжаева", specialty: "Терапевт", rating: 4.7, exp: 15 },
+  { name: "Aliya Imanova", specialty: "Kardiolog", rating: 4.9, exp: 12 },
+  { name: "Rustam Karimov", specialty: "Nevrolog", rating: 4.8, exp: 8 },
+  { name: "Nilufar Xodjaeva", specialty: "Terapevt", rating: 4.7, exp: 15 },
 ];
 
-const PLACEHOLDERS = ["Кардиолога...", "Невролога...", "Педиатра...", "Дерматолога..."];
+const PLACEHOLDERS = ["kardiologni...", "nevrologni...", "pediatrni...", "dermatologni..."];
 
 function useTypewriter(words: string[]) {
   const [idx, setIdx] = useState(0);
@@ -84,7 +84,7 @@ export function HeroSection() {
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 dark:bg-primary-950/60 border border-primary-200 dark:border-primary-800 text-primary-700 dark:text-primary-300 text-xs font-medium mb-6"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
-            Онлайн-запись к врачу — быстро и удобно
+            Shifokorga onlayn yozilish - tez va qulay
           </motion.div>
 
           {/* Headline */}
@@ -94,8 +94,8 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-5xl sm:text-6xl font-display font-bold leading-[1.1] tracking-tight text-gray-900 dark:text-white mb-5"
           >
-            Ваше здоровье —{" "}
-            <span className="text-gradient-primary">наш приоритет</span>
+            Sizning sog'lig'ingiz -{" "}
+            <span className="text-gradient-primary">bizning ustuvor vazifamiz</span>
           </motion.h1>
 
           <motion.p
@@ -104,8 +104,8 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-gray-500 dark:text-gray-400 mb-8 leading-relaxed"
           >
-            Запишитесь к лучшим специалистам за 2 минуты.
-            Онлайн-расписание, мгновенное подтверждение, рецепты в кабинете.
+            Eng yaxshi mutaxassislarga 2 daqiqada yoziling.
+            Onlayn jadval, darhol tasdiq va kabinetda retseptlar.
           </motion.p>
 
           {/* Search form */}
@@ -125,7 +125,7 @@ export function HeroSection() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder={`Найти ${placeholder}|`}
+                placeholder={`Qidirish ${placeholder}|`}
                 className="w-full h-14 pl-12 pr-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 shadow-sm text-base transition-all"
               />
             </div>
@@ -136,7 +136,7 @@ export function HeroSection() {
               className="h-14 px-7 rounded-2xl shadow-md hover:shadow-xl shrink-0"
               rightIcon={<ArrowRight size={18} />}
             >
-              Найти
+              Qidirish
             </Button>
           </motion.form>
 
@@ -148,9 +148,9 @@ export function HeroSection() {
             className="flex flex-wrap gap-6"
           >
             {[
-              { icon: <Users size={16} className="text-primary-500" />, num: "1000+", label: "пациентов" },
-              { icon: <Star size={16} className="text-amber-500 fill-amber-500" />, num: "4.9", label: "средний рейтинг" },
-              { icon: <ShieldCheck size={16} className="text-teal-500" />, num: "50+", label: "врачей" },
+              { icon: <Users size={16} className="text-primary-500" />, num: "1000+", label: "bemor" },
+              { icon: <Star size={16} className="text-amber-500 fill-amber-500" />, num: "4.9", label: "o'rtacha reyting" },
+              { icon: <ShieldCheck size={16} className="text-teal-500" />, num: "50+", label: "shifokor" },
             ].map(({ icon, num, label }) => (
               <div key={label} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                 {icon}
@@ -197,13 +197,13 @@ export function HeroSection() {
                     <span className="text-xs font-bold text-amber-600 dark:text-amber-400">
                       {doc.rating}
                     </span>
-                    <span className="text-xs text-gray-400">· {doc.exp} лет</span>
+                    <span className="text-xs text-gray-400">· {doc.exp} yil</span>
                   </div>
                 </div>
               </div>
               <div className="mt-3 flex items-center justify-between">
-                <span className="text-xs text-gray-400">Свободные слоты сегодня</span>
-                <span className="text-xs font-semibold text-green-500">●&nbsp;Доступен</span>
+                <span className="text-xs text-gray-400">Bugungi bo'sh vaqtlar</span>
+                <span className="text-xs font-semibold text-green-500">●&nbsp;Mavjud</span>
               </div>
             </motion.div>
           ))}
@@ -217,7 +217,7 @@ export function HeroSection() {
           >
             <span className="text-xs">✅</span>
             <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-              Запись подтверждена
+              Qabul tasdiqlandi
             </span>
           </motion.div>
 
@@ -229,7 +229,7 @@ export function HeroSection() {
           >
             <span className="text-xs">⭐</span>
             <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-              Новый отзыв 5.0
+              Yangi fikr 5.0
             </span>
           </motion.div>
         </div>

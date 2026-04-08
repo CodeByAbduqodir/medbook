@@ -26,8 +26,8 @@ export function useUpdateSchedule() {
     ) => doctorApi.updateSchedule(schedules),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["doctor-schedule"] });
-      toast.success("Расписание сохранено");
+      toast.success("Jadval saqlandi");
     },
-    onError: () => toast.error("Не удалось сохранить расписание"),
+    onError: () => toast.error("Jadvalni saqlab bo'lmadi"),
   });
 }

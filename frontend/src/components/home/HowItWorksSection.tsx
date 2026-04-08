@@ -10,27 +10,27 @@ const STEPS = [
     color: "from-primary-500 to-primary-600",
     glow: "shadow-primary-500/30",
     step: "01",
-    title: "Найдите врача",
+    title: "Shifokor toping",
     description:
-      "Выберите специалиста по специализации, рейтингу и отзывам. Удобные фильтры помогут быстро найти подходящего врача.",
+      "Mutaxassisni yo'nalish, reyting va fikrlar bo'yicha tanlang. Qulay filtrlar mos shifokorni tez topishga yordam beradi.",
   },
   {
     icon: <CalendarCheck size={28} />,
     color: "from-teal-500 to-teal-600",
     glow: "shadow-teal-500/30",
     step: "02",
-    title: "Выберите время",
+    title: "Vaqtni tanlang",
     description:
-      "Просмотрите доступные слоты в расписании врача и выберите удобное для вас время. Без очередей и звонков.",
+      "Shifokor jadvalidagi bo'sh vaqtlarni ko'ring va o'zingizga qulay vaqtni tanlang. Navbat va qo'ng'iroqlarsiz.",
   },
   {
     icon: <CheckCircle2 size={28} />,
     color: "from-green-500 to-emerald-600",
     glow: "shadow-green-500/30",
     step: "03",
-    title: "Вы записаны!",
+    title: "Siz yozildingiz!",
     description:
-      "Получите мгновенное подтверждение записи. После приёма рецепты и диагноз появятся в личном кабинете.",
+      "Qabulingiz darhol tasdiqlanadi. Ko'rikdan so'ng retsept va tashxis shaxsiy kabinetingizda paydo bo'ladi.",
   },
 ];
 
@@ -57,13 +57,13 @@ export function HowItWorksSection() {
           className="text-center mb-16"
         >
           <span className="inline-block text-xs font-semibold uppercase tracking-widest text-primary-600 dark:text-primary-400 mb-3">
-            Как это работает
+            Qanday ishlaydi
           </span>
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 dark:text-white">
-            Три простых шага
+            Uchta oddiy qadam
           </h2>
           <p className="mt-4 text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-            Запись к врачу занимает меньше двух минут
+            Shifokorga yozilish ikki daqiqadan kam vaqt oladi
           </p>
         </motion.div>
 

@@ -41,8 +41,8 @@ export function useStorePrescription() {
     }) => doctorApi.storePrescription(appointmentId, data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["doctor-appointments"] });
-      toast.success("Рецепт выписан");
+      toast.success("Retsept yozildi");
     },
-    onError: () => toast.error("Не удалось выписать рецепт"),
+    onError: () => toast.error("Retsept yozib bo'lmadi"),
   });
 }

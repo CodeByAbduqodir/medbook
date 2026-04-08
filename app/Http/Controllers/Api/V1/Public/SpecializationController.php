@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\SpecializationResource;
 use App\Models\Specialization;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Cache;
 
 class SpecializationController extends Controller
 {
     public function index(): JsonResponse
     {
-        $specializations = Cache::rememberForever('specializations', fn () => Specialization::all());
+        $specializations = Specialization::query()
+            ->orderBy('name')
+            ->get();
 
         return response()->json(['data' => SpecializationResource::collection($specializations)]);
     }

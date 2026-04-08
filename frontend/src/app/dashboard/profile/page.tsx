@@ -49,9 +49,9 @@ export default function PatientProfilePage() {
     mutationFn: (data: FormData) => patientApi.updateProfile(data as Record<string, unknown>),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["patient-profile"] });
-      toast.success("Профиль обновлён");
+      toast.success("Profil yangilandi");
     },
-    onError: () => toast.error("Ошибка сохранения"),
+    onError: () => toast.error("Saqlashda xatolik"),
   });
 
   const onSubmit = (data: FormData) => updateMutation.mutate(data);
@@ -61,7 +61,7 @@ export default function PatientProfilePage() {
   return (
     <PageTransition>
       <div className="max-w-xl mx-auto">
-        <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white mb-6">Мой профиль</h1>
+        <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white mb-6">Mening profilim</h1>
 
         {/* Avatar section */}
         <motion.div
@@ -75,7 +75,7 @@ export default function PatientProfilePage() {
               <p className="text-lg font-display font-semibold text-gray-900 dark:text-white">{user.name}</p>
               <p className="text-sm text-gray-500 dark:text-gray-400">{user.email}</p>
               <span className="inline-block mt-2 text-xs font-medium px-2.5 py-0.5 rounded-full bg-primary-50 dark:bg-primary-950/50 text-primary-700 dark:text-primary-300 border border-primary-200 dark:border-primary-800">
-                Пациент
+                Bemor
               </span>
             </div>
           </Card>
@@ -89,24 +89,24 @@ export default function PatientProfilePage() {
         >
           <Card padding="lg">
             <h2 className="font-display font-semibold text-gray-900 dark:text-white mb-5">
-              Личные данные
+              Shaxsiy ma'lumotlar
             </h2>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
               <Input
-                label="Телефон"
+                label="Telefon"
                 placeholder="+7 (999) 123-45-67"
                 leftIcon={<Phone size={16} />}
                 {...register("phone")}
               />
               <Input
-                label="Дата рождения"
+                label="Tug'ilgan sana"
                 type="date"
                 leftIcon={<Calendar size={16} />}
                 {...register("birth_date")}
               />
               <Input
-                label="Адрес"
-                placeholder="Город, улица, дом"
+                label="Manzil"
+                placeholder="Shahar, ko'cha, uy"
                 leftIcon={<MapPin size={16} />}
                 {...register("address")}
               />
@@ -119,7 +119,7 @@ export default function PatientProfilePage() {
                 disabled={!isDirty}
                 className="mt-2"
               >
-                Сохранить изменения
+                O'zgarishlarni saqlash
               </Button>
             </form>
           </Card>

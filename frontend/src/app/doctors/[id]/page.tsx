@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { format, addDays, startOfDay } from "date-fns";
-import { ru } from "date-fns/locale";
+import { uz } from "date-fns/locale";
 import {
   Star, Briefcase, ChevronLeft, ChevronRight, Clock,
   Calendar, CheckCircle2, MessageSquare, Info,
@@ -29,9 +29,9 @@ const TABS = ["schedule", "reviews", "about"] as const;
 type Tab = (typeof TABS)[number];
 
 const TAB_LABELS: Record<Tab, string> = {
-  schedule: "Расписание",
-  reviews: "Отзывы",
-  about: "О враче",
+  schedule: "Jadval",
+  reviews: "Fikrlar",
+  about: "Shifokor haqida",
 };
 
 export default function DoctorProfilePage() {
@@ -88,7 +88,7 @@ export default function DoctorProfilePage() {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Navbar />
-        <EmptyState title="Врач не найден" description="Проверьте ссылку или вернитесь к каталогу" action={{ label: "К каталогу", onClick: () => router.push("/doctors") }} className="pt-32" />
+        <EmptyState title="Shifokor topilmadi" description="Havolani tekshiring yoki katalogga qayting" action={{ label: "Katalogga qaytish", onClick: () => router.push("/doctors") }} className="pt-32" />
         <Footer />
       </div>
     );
@@ -133,15 +133,15 @@ export default function DoctorProfilePage() {
                 <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
                   <Star size={14} className="text-amber-400 fill-amber-400" />
                   <span className="font-bold text-gray-900 dark:text-white">
-                    {rating > 0 ? rating.toFixed(1) : "Нет оценок"}
+                    {rating > 0 ? rating.toFixed(1) : "Baholar yo'q"}
                   </span>
                   {doctor.reviews && doctor.reviews.length > 0 && (
-                    <span className="text-gray-400">({doctor.reviews.length} отзывов)</span>
+                    <span className="text-gray-400">({doctor.reviews.length} ta fikr)</span>
                   )}
                 </div>
                 <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
                   <Briefcase size={14} className="text-gray-400" />
-                  {pluralize(exp, "год опыта", "года опыта", "лет опыта")}
+                  {pluralize(exp, "yil tajriba", "yil tajriba", "yil tajriba")}
                 </div>
               </div>
             </div>
@@ -186,8 +186,8 @@ export default function DoctorProfilePage() {
             >
               {/* Week navigation */}
               <div className="flex items-center justify-between mb-5">
-                <h2 className="text-base font-semibold text-gray-900 dark:text-white">
-                  Выберите дату и время
+                  <h2 className="text-base font-semibold text-gray-900 dark:text-white">
+                  Sana va vaqtni tanlang
                 </h2>
                 <div className="flex items-center gap-2">
                   <button
@@ -198,8 +198,8 @@ export default function DoctorProfilePage() {
                     <ChevronLeft size={16} />
                   </button>
                   <span className="text-sm text-gray-500 dark:text-gray-400 min-w-[120px] text-center">
-                    {format(weekDays[0], "d MMM", { locale: ru })} –{" "}
-                    {format(weekDays[6], "d MMM yyyy", { locale: ru })}
+                    {format(weekDays[0], "d MMM", { locale: uz })} –{" "}
+                    {format(weekDays[6], "d MMM yyyy", { locale: uz })}
                   </span>
                   <button
                     onClick={() => setWeekOffset((w) => w + 1)}
@@ -231,7 +231,7 @@ export default function DoctorProfilePage() {
                       )}
                     >
                       <span className={cn("text-[10px] uppercase mb-1", isSelected ? "text-white/80" : "text-gray-400")}>
-                        {format(day, "EEE", { locale: ru })}
+                        {format(day, "EEE", { locale: uz })}
                       </span>
                       <span className="text-sm font-bold">{format(day, "d")}</span>
                     </button>
@@ -247,7 +247,7 @@ export default function DoctorProfilePage() {
                   ))}
                 </div>
               ) : !slots?.length ? (
-                <EmptyState icon={<Clock size={24} />} title="Нет доступных слотов" description="Выберите другой день" />
+                <EmptyState icon={<Clock size={24} />} title="Bo'sh vaqt yo'q" description="Boshqa kunni tanlang" />
               ) : (
                 <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
                   {slots.map((slot) => {
@@ -289,7 +289,7 @@ export default function DoctorProfilePage() {
               transition={{ duration: 0.25 }}
             >
               {!doctor.reviews?.length ? (
-                <EmptyState icon={<MessageSquare size={24} />} title="Отзывов пока нет" description="Станьте первым, кто оставит отзыв о враче" />
+                <EmptyState icon={<MessageSquare size={24} />} title="Hali fikr yo'q" description="Shifokor haqida birinchi fikr qoldiring" />
               ) : (
                 <div className="flex flex-col gap-4">
                   {doctor.reviews.filter((r) => r.is_approved).map((review, i) => (
@@ -303,7 +303,7 @@ export default function DoctorProfilePage() {
                       <div className="flex items-start justify-between mb-3">
                         <div>
                           <p className="font-medium text-gray-900 dark:text-white text-sm">
-                            {review.patient_name ?? "Пациент"}
+                            {review.patient_name ?? "Bemor"}
                           </p>
                           <p className="text-xs text-gray-400 mt-0.5">
                             {formatDate(review.created_at)}
@@ -335,16 +335,16 @@ export default function DoctorProfilePage() {
             >
               <div className="flex items-center gap-2 mb-4">
                 <Info size={18} className="text-primary-500" />
-                <h2 className="font-display font-semibold text-gray-900 dark:text-white">О специалисте</h2>
+                <h2 className="font-display font-semibold text-gray-900 dark:text-white">Mutaxassis haqida</h2>
               </div>
               {bio ? (
                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{bio}</p>
               ) : (
-                <p className="text-gray-400 italic text-sm">Описание не добавлено</p>
+                <p className="text-gray-400 italic text-sm">Tavsif qo'shilmagan</p>
               )}
               {spec && (
                 <div className="mt-6 pt-5 border-t border-gray-100 dark:border-gray-800">
-                  <p className="text-xs uppercase tracking-wider text-gray-400 mb-2">Специализация</p>
+                  <p className="text-xs uppercase tracking-wider text-gray-400 mb-2">Mutaxassislik</p>
                   <Badge variant="teal">{spec.name}</Badge>
                   {spec.description && (
                     <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{spec.description}</p>
@@ -360,8 +360,8 @@ export default function DoctorProfilePage() {
       <Modal
         isOpen={confirmOpen}
         onClose={() => { setConfirmOpen(false); setSelectedSlot(null); }}
-        title="Подтверждение записи"
-        description="Проверьте детали и подтвердите запись"
+        title="Qabulni tasdiqlash"
+        description="Tafsilotlarni tekshiring va qabulni tasdiqlang"
         size="sm"
       >
         {selectedSlot && (
@@ -388,7 +388,7 @@ export default function DoctorProfilePage() {
               isLoading={bookMutation.isPending}
               onClick={handleBook}
             >
-              Записаться
+              Yozilish
             </Button>
           </div>
         )}

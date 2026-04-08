@@ -33,7 +33,7 @@ function DoctorCard({ doctor, index }: { doctor: Doctor; index: number }) {
             {doctor.name}
           </h3>
           <p className="text-sm text-teal-600 dark:text-teal-400 font-medium">
-            {spec?.name ?? "Специалист"}
+            {spec?.name ?? "Mutaxassis"}
           </p>
           <div className="flex items-center gap-1 mt-1.5">
             <Star size={13} className="text-amber-400 fill-amber-400" />
@@ -47,7 +47,7 @@ function DoctorCard({ doctor, index }: { doctor: Doctor; index: number }) {
       {/* Experience */}
       <div className="flex items-center gap-2 mb-4 text-sm text-gray-500 dark:text-gray-400">
         <Briefcase size={14} className="text-gray-400" />
-        <span>{pluralize(exp, "год опыта", "года опыта", "лет опыта")}</span>
+        <span>{pluralize(exp, "yil tajriba", "yil tajriba", "yil tajriba")}</span>
       </div>
 
       {/* Bio */}
@@ -66,7 +66,7 @@ function DoctorCard({ doctor, index }: { doctor: Doctor; index: number }) {
           leftIcon={<Calendar size={14} />}
           className="group-hover:bg-primary-600 group-hover:text-white group-hover:border-primary-600 transition-all duration-300"
         >
-          Записаться
+          Yozilish
         </Button>
       </Link>
     </motion.div>
@@ -89,10 +89,10 @@ export function TopDoctorsSection() {
         >
           <div>
             <span className="inline-block text-xs font-semibold uppercase tracking-widest text-primary-600 dark:text-primary-400 mb-3">
-              Наши врачи
+              Bizning shifokorlar
             </span>
             <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 dark:text-white">
-              Лучшие специалисты
+              Eng yaxshi mutaxassislar
             </h2>
           </div>
           <Link href="/doctors">
@@ -101,7 +101,7 @@ export function TopDoctorsSection() {
               size="sm"
               rightIcon={<ArrowRight size={14} />}
             >
-              Все врачи
+              Barcha shifokorlar
             </Button>
           </Link>
         </motion.div>

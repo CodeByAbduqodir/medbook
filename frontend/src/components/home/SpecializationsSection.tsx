@@ -8,16 +8,16 @@ import { useSpecializations } from "@/hooks/useDoctors";
 import { cn } from "@/lib/utils";
 
 const FALLBACK_SPECS = [
-  { id: 1, name: "Терапевт", icon: <Stethoscope size={24} />, color: "from-blue-500 to-blue-600", bg: "bg-blue-50 dark:bg-blue-950/40" },
-  { id: 2, name: "Кардиолог", icon: <Heart size={24} />, color: "from-red-500 to-rose-600", bg: "bg-red-50 dark:bg-red-950/40" },
-  { id: 3, name: "Невролог", icon: <Brain size={24} />, color: "from-purple-500 to-purple-600", bg: "bg-purple-50 dark:bg-purple-950/40" },
-  { id: 4, name: "Педиатр", icon: <Baby size={24} />, color: "from-pink-500 to-pink-600", bg: "bg-pink-50 dark:bg-pink-950/40" },
-  { id: 5, name: "Офтальмолог", icon: <Eye size={24} />, color: "from-teal-500 to-teal-600", bg: "bg-teal-50 dark:bg-teal-950/40" },
-  { id: 6, name: "Дерматолог", icon: <Sun size={24} />, color: "from-amber-500 to-amber-600", bg: "bg-amber-50 dark:bg-amber-950/40" },
-  { id: 7, name: "Хирург", icon: <Scissors size={24} />, color: "from-gray-600 to-gray-700", bg: "bg-gray-100 dark:bg-gray-800/60" },
-  { id: 8, name: "Стоматолог", icon: <Smile size={24} />, color: "from-cyan-500 to-cyan-600", bg: "bg-cyan-50 dark:bg-cyan-950/40" },
-  { id: 9, name: "Ортопед", icon: <Bone size={24} />, color: "from-orange-500 to-orange-600", bg: "bg-orange-50 dark:bg-orange-950/40" },
-  { id: 10, name: "Пульмонолог", icon: <Wind size={24} />, color: "from-sky-500 to-sky-600", bg: "bg-sky-50 dark:bg-sky-950/40" },
+  { id: 1, name: "Terapevt", icon: <Stethoscope size={24} />, color: "from-blue-500 to-blue-600", bg: "bg-blue-50 dark:bg-blue-950/40" },
+  { id: 2, name: "Kardiolog", icon: <Heart size={24} />, color: "from-red-500 to-rose-600", bg: "bg-red-50 dark:bg-red-950/40" },
+  { id: 3, name: "Nevrolog", icon: <Brain size={24} />, color: "from-purple-500 to-purple-600", bg: "bg-purple-50 dark:bg-purple-950/40" },
+  { id: 4, name: "Pediatr", icon: <Baby size={24} />, color: "from-pink-500 to-pink-600", bg: "bg-pink-50 dark:bg-pink-950/40" },
+  { id: 5, name: "Oftalmolog", icon: <Eye size={24} />, color: "from-teal-500 to-teal-600", bg: "bg-teal-50 dark:bg-teal-950/40" },
+  { id: 6, name: "Dermatolog", icon: <Sun size={24} />, color: "from-amber-500 to-amber-600", bg: "bg-amber-50 dark:bg-amber-950/40" },
+  { id: 7, name: "Jarroh", icon: <Scissors size={24} />, color: "from-gray-600 to-gray-700", bg: "bg-gray-100 dark:bg-gray-800/60" },
+  { id: 8, name: "Stomatolog", icon: <Smile size={24} />, color: "from-cyan-500 to-cyan-600", bg: "bg-cyan-50 dark:bg-cyan-950/40" },
+  { id: 9, name: "Ortoped", icon: <Bone size={24} />, color: "from-orange-500 to-orange-600", bg: "bg-orange-50 dark:bg-orange-950/40" },
+  { id: 10, name: "Pulmonolog", icon: <Wind size={24} />, color: "from-sky-500 to-sky-600", bg: "bg-sky-50 dark:bg-sky-950/40" },
 ];
 
 const containerVariants = {
@@ -54,17 +54,17 @@ export function SpecializationsSection() {
         >
           <div>
             <span className="inline-block text-xs font-semibold uppercase tracking-widest text-primary-600 dark:text-primary-400 mb-3">
-              Специализации
+              Mutaxassisliklar
             </span>
             <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 dark:text-white">
-              Найдите нужного специалиста
+              Kerakli mutaxassisni toping
             </h2>
           </div>
           <button
             onClick={() => router.push("/doctors")}
             className="flex items-center gap-1.5 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
           >
-            Все специальности <ArrowRight size={15} />
+            Barcha mutaxassisliklar <ArrowRight size={15} />
           </button>
         </motion.div>
 

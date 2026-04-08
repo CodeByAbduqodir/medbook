@@ -8,6 +8,7 @@ use App\Models\Specialization;
 use App\Orchid\Layouts\Specialization\SpecializationEditLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
@@ -71,6 +72,7 @@ class SpecializationEditScreen extends Screen
         ]);
 
         $specialization->fill($request->input('specialization'))->save();
+        Cache::forget('specializations');
 
         Toast::info('Specialization saved successfully.');
 
@@ -80,6 +82,7 @@ class SpecializationEditScreen extends Screen
     public function remove(Specialization $specialization): RedirectResponse
     {
         $specialization->delete();
+        Cache::forget('specializations');
 
         Toast::info('Specialization has been deleted.');
 

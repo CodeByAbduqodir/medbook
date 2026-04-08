@@ -18,9 +18,9 @@ import type { Appointment } from "@/lib/types";
 
 type TabKey = "upcoming" | "past" | "cancelled";
 const TABS: { key: TabKey; label: string }[] = [
-  { key: "upcoming", label: "Предстоящие" },
-  { key: "past", label: "Прошедшие" },
-  { key: "cancelled", label: "Отменённые" },
+  { key: "upcoming", label: "Kelgusi" },
+  { key: "past", label: "O'tgan" },
+  { key: "cancelled", label: "Bekor qilingan" },
 ];
 
 function AppointmentCard({ appointment, onCancel, onReview }: {
@@ -63,25 +63,25 @@ function AppointmentCard({ appointment, onCancel, onReview }: {
         <div className="flex items-center gap-2 mt-4">
           {canCancel && (
             <Button variant="danger" size="sm" leftIcon={<X size={13} />} onClick={() => onCancel(appointment.id)}>
-              Отменить
+              Bekor qilish
             </Button>
           )}
           {canReview && (
             <Button variant="secondary" size="sm" leftIcon={<Star size={13} />} onClick={() => onReview(appointment)}>
-              Оставить отзыв
+              Fikr qoldirish
             </Button>
           )}
           {appointment.review && (
             <div className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
               <Star size={12} className="fill-amber-400 text-amber-400" />
-              <span>Отзыв: {appointment.review.rating}/5</span>
+              <span>Fikr: {appointment.review.rating}/5</span>
             </div>
           )}
           <button
             onClick={() => setExpanded(!expanded)}
             className="ml-auto flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
           >
-            {expanded ? <><ChevronUp size={14} />Скрыть</> : <><ChevronDown size={14} />Детали</>}
+            {expanded ? <><ChevronUp size={14} />Yashirish</> : <><ChevronDown size={14} />Batafsil</>}
           </button>
         </div>
       </div>
@@ -98,13 +98,13 @@ function AppointmentCard({ appointment, onCancel, onReview }: {
           >
             {appointment.diagnosis && (
               <div className="mb-3">
-                <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Диагноз</p>
+                <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Tashxis</p>
                 <p className="text-sm text-gray-700 dark:text-gray-300">{appointment.diagnosis}</p>
               </div>
             )}
             {appointment.prescriptions && appointment.prescriptions.length > 0 && (
               <div>
-                <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Рецепты</p>
+                <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Retseptlar</p>
                 <div className="flex flex-col gap-2">
                   {appointment.prescriptions.map((p) => (
                     <div key={p.id} className="text-sm bg-white dark:bg-gray-900 rounded-xl p-3 border border-gray-100 dark:border-gray-700">
@@ -117,7 +117,7 @@ function AppointmentCard({ appointment, onCancel, onReview }: {
               </div>
             )}
             {!appointment.diagnosis && (!appointment.prescriptions || appointment.prescriptions.length === 0) && (
-              <p className="text-sm text-gray-400 italic">Нет дополнительных данных</p>
+              <p className="text-sm text-gray-400 italic">Qo'shimcha ma'lumot yo'q</p>
             )}
           </motion.div>
         )}
@@ -160,7 +160,7 @@ export default function PatientAppointmentsPage() {
   return (
     <PageTransition>
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white mb-6">Мои записи</h1>
+        <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white mb-6">Mening qabullarim</h1>
 
         {/* Tabs */}
         <div className="flex gap-1 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl mb-6">
@@ -187,9 +187,9 @@ export default function PatientAppointmentsPage() {
         ) : filtered.length === 0 ? (
           <EmptyState
             icon={<Calendar size={28} />}
-            title="Записей нет"
-            description={tab === "upcoming" ? "У вас нет предстоящих записей" : "Нет записей в этом разделе"}
-            action={tab === "upcoming" ? { label: "Найти врача", onClick: () => window.location.href = "/doctors" } : undefined}
+            title="Qabul yo'q"
+            description={tab === "upcoming" ? "Sizda kelgusi qabul yo'q" : "Bu bo'limda qabul yo'q"}
+            action={tab === "upcoming" ? { label: "Shifokor topish", onClick: () => window.location.href = "/doctors" } : undefined}
           />
         ) : (
           <div className="flex flex-col gap-4">
@@ -206,20 +206,20 @@ export default function PatientAppointmentsPage() {
       </div>
 
       {/* Cancel modal */}
-      <Modal isOpen={!!cancelId} onClose={() => setCancelId(null)} title="Отменить запись?" size="sm">
+      <Modal isOpen={!!cancelId} onClose={() => setCancelId(null)} title="Qabulni bekor qilish?" size="sm">
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">
-          Вы уверены, что хотите отменить эту запись?
+          Bu qabulni bekor qilmoqchimisiz?
         </p>
         <div className="flex gap-3">
-          <Button variant="ghost" fullWidth onClick={() => setCancelId(null)}>Назад</Button>
+          <Button variant="ghost" fullWidth onClick={() => setCancelId(null)}>Orqaga</Button>
           <Button variant="danger" fullWidth isLoading={cancelMutation.isPending} onClick={handleCancel}>
-            Отменить запись
+            Qabulni bekor qilish
           </Button>
         </div>
       </Modal>
 
       {/* Review modal */}
-      <Modal isOpen={!!reviewAppt} onClose={() => setReviewAppt(null)} title="Оставить отзыв" size="sm">
+      <Modal isOpen={!!reviewAppt} onClose={() => setReviewAppt(null)} title="Fikr qoldirish" size="sm">
         <div className="flex flex-col gap-4">
           {reviewAppt?.doctor && (
             <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
@@ -231,17 +231,17 @@ export default function PatientAppointmentsPage() {
             </div>
           )}
           <div className="flex flex-col items-center gap-2">
-            <p className="text-sm text-gray-600 dark:text-gray-400">Ваша оценка</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Sizning bahongiz</p>
             <StarRating value={reviewRating} onChange={setReviewRating} size="lg" />
           </div>
           <div>
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 block">
-              Комментарий <span className="text-gray-400 font-normal">(необязательно)</span>
+              Izoh <span className="text-gray-400 font-normal">(ixtiyoriy)</span>
             </label>
             <textarea
               value={reviewComment}
               onChange={(e) => setReviewComment(e.target.value)}
-              placeholder="Поделитесь впечатлениями о приёме..."
+              placeholder="Qabul haqidagi taassurotlaringizni yozing..."
               rows={3}
               className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
             />
@@ -253,7 +253,7 @@ export default function PatientAppointmentsPage() {
             isLoading={reviewMutation.isPending}
             onClick={handleReview}
           >
-            Отправить отзыв
+            Fikr yuborish
           </Button>
         </div>
       </Modal>

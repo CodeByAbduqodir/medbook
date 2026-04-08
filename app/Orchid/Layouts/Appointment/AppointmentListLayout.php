@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Orchid\Layouts\Appointment;
 
 use App\Models\Appointment;
+use Carbon\Carbon;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
-use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -22,6 +22,7 @@ class AppointmentListLayout extends Table
             TD::make('id', '#')
                 ->sort()
                 ->cantHide()
+                ->render(fn (Appointment $appointment) => $appointment->id)
                 ->width('60px'),
 
             TD::make('doctor', 'Doctor')
@@ -31,7 +32,7 @@ class AppointmentListLayout extends Table
                 ->render(fn (Appointment $appointment) => $appointment->patient?->name ?? '—'),
 
             TD::make('start_time', 'Date & Time')
-                ->usingComponent(DateTimeSplit::class)
+                ->render(fn (Appointment $appointment) => Carbon::parse($appointment->start_time)->toDayDateTimeString())
                 ->sort(),
 
             TD::make('status', 'Status')

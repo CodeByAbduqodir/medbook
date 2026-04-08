@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { format } from "date-fns";
-import { ru } from "date-fns/locale";
 import { Calendar, Clock, CheckCircle, XCircle, ClipboardCheck, Plus, ChevronDown, ChevronUp } from "lucide-react";
 import {
   useDoctorAppointments, useConfirmAppointment,
@@ -25,11 +23,11 @@ import type { Appointment } from "@/lib/types";
 
 type FilterKey = "all" | "pending" | "confirmed" | "completed" | "cancelled";
 const FILTERS: { key: FilterKey; label: string }[] = [
-  { key: "all", label: "Все" },
-  { key: "pending", label: "Ожидают" },
-  { key: "confirmed", label: "Подтверждены" },
-  { key: "completed", label: "Завершены" },
-  { key: "cancelled", label: "Отменены" },
+  { key: "all", label: "Barchasi" },
+  { key: "pending", label: "Kutilmoqda" },
+  { key: "confirmed", label: "Tasdiqlangan" },
+  { key: "completed", label: "Yakunlangan" },
+  { key: "cancelled", label: "Bekor qilingan" },
 ];
 
 function AppointmentRow({ appointment, onConfirm, onComplete, onCancel, onPrescription }: {
@@ -66,29 +64,29 @@ function AppointmentRow({ appointment, onConfirm, onComplete, onCancel, onPrescr
         <div className="flex flex-wrap gap-2 mt-4">
           {appointment.status === "pending" && (
             <Button variant="secondary" size="sm" leftIcon={<CheckCircle size={13} />} onClick={onConfirm}>
-              Подтвердить
+              Tasdiqlash
             </Button>
           )}
           {appointment.status === "confirmed" && (
             <Button variant="primary" size="sm" leftIcon={<ClipboardCheck size={13} />} onClick={onComplete}>
-              Завершить приём
+              Qabulni yakunlash
             </Button>
           )}
           {appointment.status === "completed" && (
             <Button variant="outline" size="sm" leftIcon={<Plus size={13} />} onClick={onPrescription}>
-              Выписать рецепт
+              Retsept yozish
             </Button>
           )}
           {(appointment.status === "pending" || appointment.status === "confirmed") && (
             <Button variant="ghost" size="sm" leftIcon={<XCircle size={13} />} onClick={onCancel} className="text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30">
-              Отменить
+              Bekor qilish
             </Button>
           )}
           <button
             onClick={() => setOpen(!open)}
             className="ml-auto flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
           >
-            {open ? <><ChevronUp size={13} />Свернуть</> : <><ChevronDown size={13} />Подробнее</>}
+            {open ? <><ChevronUp size={13} />Yashirish</> : <><ChevronDown size={13} />Batafsil</>}
           </button>
         </div>
       </div>
@@ -104,13 +102,13 @@ function AppointmentRow({ appointment, onConfirm, onComplete, onCancel, onPrescr
           >
             {appointment.diagnosis && (
               <div className="mb-3">
-                <p className="text-xs uppercase tracking-wide text-gray-400 mb-1">Диагноз</p>
+                <p className="text-xs uppercase tracking-wide text-gray-400 mb-1">Tashxis</p>
                 <p className="text-sm text-gray-700 dark:text-gray-300">{appointment.diagnosis}</p>
               </div>
             )}
             {appointment.prescriptions && appointment.prescriptions.length > 0 && (
               <div>
-                <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">Рецепты ({appointment.prescriptions.length})</p>
+                <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">Retseptlar ({appointment.prescriptions.length})</p>
                 <div className="flex flex-col gap-1.5">
                   {appointment.prescriptions.map((p) => (
                     <div key={p.id} className="text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-900 rounded-lg p-2.5 border border-gray-100 dark:border-gray-700">
@@ -122,7 +120,7 @@ function AppointmentRow({ appointment, onConfirm, onComplete, onCancel, onPrescr
               </div>
             )}
             {!appointment.diagnosis && !appointment.prescriptions?.length && (
-              <p className="text-sm text-gray-400 italic">Нет дополнительных данных</p>
+              <p className="text-sm text-gray-400 italic">Qo'shimcha ma'lumot yo'q</p>
             )}
           </motion.div>
         )}
@@ -151,7 +149,7 @@ export default function DoctorAppointmentsPage() {
   return (
     <PageTransition>
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white mb-6">Записи пациентов</h1>
+        <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white mb-6">Bemor qabullari</h1>
 
         {/* Filters */}
         <div className="flex flex-wrap gap-2 mb-6">
@@ -176,7 +174,7 @@ export default function DoctorAppointmentsPage() {
             {Array.from({ length: 4 }).map((_, i) => <AppointmentCardSkeleton key={i} />)}
           </div>
         ) : filtered.length === 0 ? (
-          <EmptyState icon={<Calendar size={28} />} title="Записей нет" description="Нет записей по выбранному фильтру" />
+          <EmptyState icon={<Calendar size={28} />} title="Qabul yo'q" description="Tanlangan filtr bo'yicha qabul yo'q" />
         ) : (
           <div className="flex flex-col gap-4">
             {filtered.map((a) => (
@@ -194,14 +192,14 @@ export default function DoctorAppointmentsPage() {
       </div>
 
       {/* Complete modal */}
-      <Modal isOpen={!!completeId} onClose={() => setCompleteId(null)} title="Завершить приём" size="sm">
+      <Modal isOpen={!!completeId} onClose={() => setCompleteId(null)} title="Qabulni yakunlash" size="sm">
         <div className="flex flex-col gap-4">
           <div>
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 block">Диагноз</label>
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 block">Tashxis</label>
             <textarea
               value={diagnosis}
               onChange={(e) => setDiagnosis(e.target.value)}
-              placeholder="Введите диагноз..."
+              placeholder="Tashxisni kiriting..."
               rows={3}
               className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
             />
@@ -218,33 +216,33 @@ export default function DoctorAppointmentsPage() {
               setShowSuccess(true);
             }}
           >
-            Завершить
+            Yakunlash
           </Button>
         </div>
       </Modal>
 
       {/* Cancel modal */}
-      <Modal isOpen={!!cancelId} onClose={() => setCancelId(null)} title="Отменить запись?" size="sm">
+      <Modal isOpen={!!cancelId} onClose={() => setCancelId(null)} title="Qabulni bekor qilish?" size="sm">
         <div className="flex gap-3 mt-2">
-          <Button variant="ghost" fullWidth onClick={() => setCancelId(null)}>Назад</Button>
+          <Button variant="ghost" fullWidth onClick={() => setCancelId(null)}>Orqaga</Button>
           <Button variant="danger" fullWidth isLoading={cancelMutation.isPending} onClick={async () => { if (!cancelId) return; await cancelMutation.mutateAsync({ id: cancelId }); setCancelId(null); }}>
-            Отменить
+            Bekor qilish
           </Button>
         </div>
       </Modal>
 
       {/* Prescription modal */}
-      <Modal isOpen={!!prescriptionAppt} onClose={() => setPrescriptionAppt(null)} title="Выписать рецепт" size="sm">
+      <Modal isOpen={!!prescriptionAppt} onClose={() => setPrescriptionAppt(null)} title="Retsept yozish" size="sm">
         <div className="flex flex-col gap-3">
-          <Input label="Препарат" placeholder="Название лекарства" value={prescription.medicine_name} onChange={(e) => setPrescription({ ...prescription, medicine_name: e.target.value })} />
-          <Input label="Дозировка" placeholder="250мг, 1 таблетка" value={prescription.dosage} onChange={(e) => setPrescription({ ...prescription, dosage: e.target.value })} />
-          <Input label="Длительность" placeholder="7 дней, 2 недели" value={prescription.duration} onChange={(e) => setPrescription({ ...prescription, duration: e.target.value })} />
+          <Input label="Dori" placeholder="Dori nomi" value={prescription.medicine_name} onChange={(e) => setPrescription({ ...prescription, medicine_name: e.target.value })} />
+          <Input label="Doza" placeholder="250 mg, 1 tabletka" value={prescription.dosage} onChange={(e) => setPrescription({ ...prescription, dosage: e.target.value })} />
+          <Input label="Davomiyligi" placeholder="7 kun, 2 hafta" value={prescription.duration} onChange={(e) => setPrescription({ ...prescription, duration: e.target.value })} />
           <div>
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 block">Инструкция</label>
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 block">Yo'riqnoma</label>
             <textarea
               value={prescription.instructions}
               onChange={(e) => setPrescription({ ...prescription, instructions: e.target.value })}
-              placeholder="Принимать 2 раза в день после еды..."
+              placeholder="Ovqatdan keyin kuniga 2 marta qabul qiling..."
               rows={2}
               className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
             />
@@ -261,13 +259,13 @@ export default function DoctorAppointmentsPage() {
               setShowSuccess(true);
             }}
           >
-            Выписать рецепт
+            Retsept yozish
           </Button>
         </div>
       </Modal>
 
       {/* Success animation */}
-      <SuccessAnimation show={showSuccess} message="Приём завершён!" />
+      <SuccessAnimation show={showSuccess} message="Qabul yakunlandi!" />
     </PageTransition>
   );
 }

@@ -13,10 +13,10 @@ interface StatItem {
 }
 
 const STATS: StatItem[] = [
-  { icon: <Users size={28} />, end: 1240, suffix: "+", label: "Довольных пациентов", color: "text-primary-600 dark:text-primary-400" },
-  { icon: <Stethoscope size={28} />, end: 54, suffix: "+", label: "Врачей-специалистов", color: "text-teal-600 dark:text-teal-400" },
-  { icon: <Star size={28} />, end: 4.9, suffix: "", label: "Средний рейтинг", color: "text-amber-500" },
-  { icon: <Clock size={28} />, end: 2, suffix: " мин", label: "Время записи", color: "text-green-600 dark:text-green-400" },
+  { icon: <Users size={28} />, end: 1240, suffix: "+", label: "Rozi bemorlar", color: "text-primary-600 dark:text-primary-400" },
+  { icon: <Stethoscope size={28} />, end: 54, suffix: "+", label: "Mutaxassis shifokorlar", color: "text-teal-600 dark:text-teal-400" },
+  { icon: <Star size={28} />, end: 4.9, suffix: "", label: "O'rtacha reyting", color: "text-amber-500" },
+  { icon: <Clock size={28} />, end: 2, suffix: " daqiqa", label: "Yozilish vaqti", color: "text-green-600 dark:text-green-400" },
 ];
 
 function CountUp({ end, suffix }: { end: number; suffix: string }) {

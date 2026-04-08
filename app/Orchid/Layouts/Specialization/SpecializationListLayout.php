@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Orchid\Layouts\Specialization;
 
 use App\Models\Specialization;
+use Carbon\Carbon;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -22,6 +22,7 @@ class SpecializationListLayout extends Table
         return [
             TD::make('id', '#')
                 ->sort()
+                ->render(fn (Specialization $specialization) => $specialization->id)
                 ->width('60px'),
 
             TD::make('name', 'Name')
@@ -37,7 +38,7 @@ class SpecializationListLayout extends Table
                 ->render(fn (Specialization $specialization) => $specialization->doctors_count),
 
             TD::make('created_at', 'Created')
-                ->usingComponent(DateTimeSplit::class)
+                ->render(fn (Specialization $specialization) => Carbon::parse($specialization->created_at)->toDayDateTimeString())
                 ->sort()
                 ->defaultHidden(),
 

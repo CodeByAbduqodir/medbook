@@ -6,34 +6,34 @@ import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 const REVIEWS = [
   {
-    name: "Марина Соколова",
-    text: "Очень удобный сервис! Записалась к кардиологу за 2 минуты, пришло подтверждение сразу. Врач отличный, рецепт в личном кабинете — всё как обещали.",
+    name: "Marina Sokolova",
+    text: "Juda qulay xizmat! 2 daqiqada kardiologga yozildim, tasdiq darhol keldi. Shifokor a'lo, retsept ham kabinetsda - hammasi va'da qilingandek.",
     rating: 5,
-    specialty: "Кардиология",
+    specialty: "Kardiologiya",
   },
   {
-    name: "Александр Петров",
-    text: "Наконец-то нашёл нормального невролога через этот сервис. Никаких очередей, всё онлайн. Рекомендую всем, кто ценит своё время.",
+    name: "Aleksandr Petrov",
+    text: "Nihoyat shu xizmat orqali yaxshi nevrolog topdim. Navbat yo'q, hammasi onlayn. Vaqtini qadrlaydiganlarga tavsiya qilaman.",
     rating: 5,
-    specialty: "Неврология",
+    specialty: "Nevrologiya",
   },
   {
-    name: "Лейла Ахмедова",
-    text: "Записывала ребёнка к педиатру. Слоты удобно показаны, можно выбрать точное время. Врач внимательный, приём прошёл отлично. Спасибо!",
+    name: "Leyla Axmedova",
+    text: "Farzandimni pediatrga yozdim. Bo'sh vaqtlar juda qulay ko'rsatilgan, aniq vaqtni tanlash mumkin. Shifokor e'tiborli, qabul juda yaxshi o'tdi. Rahmat!",
     rating: 5,
-    specialty: "Педиатрия",
+    specialty: "Pediatriya",
   },
   {
-    name: "Дмитрий Козлов",
-    text: "Использую MedBook уже полгода. Отличная альтернатива звонкам в регистратуру. Все мои записи и рецепты хранятся в одном месте.",
+    name: "Dmitriy Kozlov",
+    text: "MedBook'dan yarim yildan beri foydalanaman. Registraturaga qo'ng'iroq qilishga zo'r alternativa. Barcha qabul va retseptlarim bir joyda saqlanadi.",
     rating: 4,
-    specialty: "Терапевт",
+    specialty: "Terapevt",
   },
   {
-    name: "Зарина Юсупова",
-    text: "Профессиональный сервис. Особенно понравилось, что после приёма можно оставить отзыв и это реально влияет на рейтинг врача.",
+    name: "Zarina Yusupova",
+    text: "Professional xizmat. Ayniqsa qabuldan keyin fikr qoldirish mumkinligi va bu shifokor reytingiga haqiqatan ta'sir qilishi yoqdi.",
     rating: 5,
-    specialty: "Дерматология",
+    specialty: "Dermatologiya",
   },
 ];
 
@@ -61,10 +61,10 @@ export function ReviewsSection() {
           className="text-center mb-16"
         >
           <span className="inline-block text-xs font-semibold uppercase tracking-widest text-primary-600 dark:text-primary-400 mb-3">
-            Отзывы
+            Fikrlar
           </span>
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 dark:text-white">
-            Что говорят пациенты
+            Bemorlar nimalar deydi
           </h2>
         </motion.div>
 

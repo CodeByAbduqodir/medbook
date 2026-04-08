@@ -4,7 +4,6 @@ import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { format } from "date-fns";
-import { ru } from "date-fns/locale";
 import { Calendar, Clock, Users, Star, ArrowRight, ClipboardList } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { useDoctorAppointments } from "@/hooks/useAppointments";
@@ -68,10 +67,14 @@ export default function DoctorDashboard() {
           className="mb-8"
         >
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-            {format(new Date(), "EEEE, d MMMM", { locale: ru })}
+            {new Intl.DateTimeFormat("uz-UZ", {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+            }).format(new Date())}
           </p>
           <h1 className="text-2xl sm:text-3xl font-display font-bold text-gray-900 dark:text-white">
-            Добро пожаловать, {user?.name?.split(" ")[0]}! 👨‍⚕️
+            Xush kelibsiz, {user?.name?.split(" ")[0]}! 👨‍⚕️
           </h1>
         </motion.div>
 
@@ -83,10 +86,10 @@ export default function DoctorDashboard() {
           className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8"
         >
           {[
-            { label: "Ожидают", value: stats.pending, color: "text-amber-600 dark:text-amber-400" },
-            { label: "Подтверждено", value: stats.confirmed, color: "text-blue-600 dark:text-blue-400" },
-            { label: "Завершено", value: stats.completed, color: "text-green-600 dark:text-green-400" },
-            { label: "Всего", value: stats.total, color: "text-gray-700 dark:text-gray-300" },
+            { label: "Kutilmoqda", value: stats.pending, color: "text-amber-600 dark:text-amber-400" },
+            { label: "Tasdiqlangan", value: stats.confirmed, color: "text-blue-600 dark:text-blue-400" },
+            { label: "Yakunlangan", value: stats.completed, color: "text-green-600 dark:text-green-400" },
+            { label: "Jami", value: stats.total, color: "text-gray-700 dark:text-gray-300" },
           ].map(({ label, value, color }) => (
             <motion.div key={label} variants={item}>
               <Card padding="md" className="text-center">
@@ -105,9 +108,9 @@ export default function DoctorDashboard() {
           className="mb-8"
         >
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-display font-semibold text-gray-900 dark:text-white">Расписание на сегодня</h2>
+            <h2 className="font-display font-semibold text-gray-900 dark:text-white">Bugungi jadval</h2>
             <Link href="/doctor/appointments" className="text-xs text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1">
-              Все записи <ArrowRight size={12} />
+              Barcha qabul <ArrowRight size={12} />
             </Link>
           </div>
 
@@ -118,7 +121,7 @@ export default function DoctorDashboard() {
           ) : upcomingToday.length === 0 ? (
             <div className="text-center py-10 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800">
               <Calendar size={32} className="mx-auto text-gray-300 dark:text-gray-600 mb-3" />
-              <p className="text-sm text-gray-500 dark:text-gray-400">Нет записей на сегодня</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Bugun qabul yo'q</p>
             </div>
           ) : (
             <div className="flex flex-col gap-3">
@@ -133,13 +136,13 @@ export default function DoctorDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <h2 className="font-display font-semibold text-gray-900 dark:text-white mb-4">Быстрые действия</h2>
+          <h2 className="font-display font-semibold text-gray-900 dark:text-white mb-4">Tezkor amallar</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
-              { href: "/doctor/schedule", icon: <Calendar size={20} />, label: "Расписание", desc: "Управление временем приёма", color: "bg-gradient-to-br from-primary-500 to-primary-600" },
-              { href: "/doctor/appointments", icon: <ClipboardList size={20} />, label: "Все записи", desc: "Управление приёмами", color: "bg-gradient-to-br from-teal-500 to-teal-600" },
-              { href: "/doctor/patients", icon: <Users size={20} />, label: "Пациенты", desc: "История посещений", color: "bg-gradient-to-br from-amber-500 to-amber-600" },
-              { href: "/doctor/profile", icon: <Star size={20} />, label: "Мой профиль", desc: "Данные и специализация", color: "bg-gradient-to-br from-purple-500 to-purple-600" },
+              { href: "/doctor/schedule", icon: <Calendar size={20} />, label: "Jadval", desc: "Qabul vaqtlarini boshqarish", color: "bg-gradient-to-br from-primary-500 to-primary-600" },
+              { href: "/doctor/appointments", icon: <ClipboardList size={20} />, label: "Barcha qabullar", desc: "Qabul jarayonini boshqarish", color: "bg-gradient-to-br from-teal-500 to-teal-600" },
+              { href: "/doctor/patients", icon: <Users size={20} />, label: "Bemorlar", desc: "Tashriflar tarixi", color: "bg-gradient-to-br from-amber-500 to-amber-600" },
+              { href: "/doctor/profile", icon: <Star size={20} />, label: "Mening profilim", desc: "Ma'lumotlar va mutaxassislik", color: "bg-gradient-to-br from-purple-500 to-purple-600" },
             ].map(({ href, icon, label, desc, color }) => (
               <Link key={href} href={href}>
                 <div className="group flex items-center gap-4 p-5 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 card-shadow hover:card-shadow-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer">

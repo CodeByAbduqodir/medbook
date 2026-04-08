@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Orchid\Layouts\Review;
 
 use App\Models\Review;
+use Carbon\Carbon;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
-use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -21,6 +21,7 @@ class ReviewListLayout extends Table
         return [
             TD::make('id', '#')
                 ->sort()
+                ->render(fn (Review $review) => $review->id)
                 ->width('60px'),
 
             TD::make('patient', 'Patient')
@@ -44,7 +45,7 @@ class ReviewListLayout extends Table
                     : '<span class="badge bg-warning text-dark">Pending</span>'),
 
             TD::make('created_at', 'Created')
-                ->usingComponent(DateTimeSplit::class)
+                ->render(fn (Review $review) => Carbon::parse($review->created_at)->toDayDateTimeString())
                 ->sort()
                 ->defaultHidden(),
 

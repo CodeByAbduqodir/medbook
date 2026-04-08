@@ -37,9 +37,9 @@ export default function DoctorPatientsPage() {
     <PageTransition>
       <div className="max-w-2xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white">Пациенты</h1>
+          <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white">Bemorlar</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            {patients ? `${patients.length} пациентов` : "Загрузка..."}
+            {patients ? `${patients.length} ta bemor` : "Yuklanmoqda..."}
           </p>
         </div>
 
@@ -50,7 +50,7 @@ export default function DoctorPatientsPage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Поиск по имени или email..."
+            placeholder="Ism yoki email bo'yicha qidirish..."
             className="w-full h-10 pl-10 pr-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
           />
         </div>
@@ -70,8 +70,8 @@ export default function DoctorPatientsPage() {
         ) : filtered.length === 0 ? (
           <EmptyState
             icon={<Users size={28} />}
-            title={search ? "Пациент не найден" : "Нет пациентов"}
-            description={search ? "Попробуйте другой запрос" : "Здесь будут отображаться пациенты, которые записались к вам"}
+            title={search ? "Bemor topilmadi" : "Bemorlar yo'q"}
+            description={search ? "Boshqa so'rovni sinab ko'ring" : "Bu yerda sizga yozilgan bemorlar ko'rsatiladi"}
           />
         ) : (
           <div className="flex flex-col gap-4">
@@ -94,11 +94,11 @@ export default function DoctorPatientsPage() {
                       <div className="flex flex-wrap gap-3 mt-3 text-xs text-gray-500 dark:text-gray-400">
                         <div className="flex items-center gap-1.5">
                           <Calendar size={11} />
-                          <span>{apptCount} {apptCount === 1 ? "визит" : apptCount < 5 ? "визита" : "визитов"}</span>
+                          <span>{apptCount} {apptCount === 1 ? "tashrif" : "tashrif"}</span>
                         </div>
                         {lastAppt && (
                           <div className="flex items-center gap-1.5">
-                            <span>Последний: {formatDate(lastAppt.start_time)}</span>
+                            <span>Oxirgisi: {formatDate(lastAppt.start_time)}</span>
                             <StatusBadge status={lastAppt.status} />
                           </div>
                         )}

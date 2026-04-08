@@ -27,7 +27,7 @@ export function Select({
   options,
   value,
   onChange,
-  placeholder = "Выберите...",
+  placeholder = "Tanlang...",
   label,
   error,
   searchable = false,
@@ -149,7 +149,7 @@ export function Select({
                       type="text"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      placeholder="Поиск..."
+                      placeholder="Qidirish..."
                       className="w-full h-8 pl-7 pr-3 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-primary-500"
                     />
                   </div>
@@ -158,7 +158,7 @@ export function Select({
               <div className="max-h-52 overflow-y-auto py-1">
                 {filtered.length === 0 ? (
                   <p className="text-center text-sm text-gray-400 py-4">
-                    Ничего не найдено
+                    Hech narsa topilmadi
                   </p>
                 ) : (
                   filtered.map((option) => (

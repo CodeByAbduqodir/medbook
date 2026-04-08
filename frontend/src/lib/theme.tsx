@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "light" | "dark" | "system";
+type Theme = "light" | "dark";
 
 interface ThemeContextValue {
   theme: Theme;
@@ -14,49 +14,39 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("system");
+  const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
+
+    return window.localStorage.getItem("medbook_theme") === "dark" ? "dark" : "light";
+  });
   const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
-    const stored = localStorage.getItem("medbook_theme") as Theme | null;
-    if (stored) {
-      setThemeState(stored);
-    }
-  }, []);
-
-  useEffect(() => {
     const root = document.documentElement;
-
-    const apply = (t: Theme) => {
-      let resolved: "light" | "dark";
-      if (t === "system") {
-        resolved = window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
-      } else {
-        resolved = t;
-      }
-      setResolvedTheme(resolved);
-      root.classList.toggle("dark", resolved === "dark");
-    };
-
-    apply(theme);
-
-    if (theme === "system") {
-      const mq = window.matchMedia("(prefers-color-scheme: dark)");
-      const onChange = () => apply("system");
-      mq.addEventListener("change", onChange);
-      return () => mq.removeEventListener("change", onChange);
-    }
+    root.classList.toggle("dark", theme === "dark");
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
+    setResolvedTheme(theme);
   }, [theme]);
 
-  const setTheme = (newTheme: Theme) => {
+  const applyTheme = (newTheme: Theme) => {
+    const root = document.documentElement;
+    root.classList.toggle("dark", newTheme === "dark");
+    root.dataset.theme = newTheme;
+    root.style.colorScheme = newTheme;
+    setResolvedTheme(newTheme);
     setThemeState(newTheme);
-    localStorage.setItem("medbook_theme", newTheme);
+    window.localStorage.setItem("medbook_theme", newTheme);
+  };
+
+  const setTheme = (newTheme: Theme) => {
+    applyTheme(newTheme);
   };
 
   const toggleTheme = () => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    applyTheme(theme === "dark" ? "light" : "dark");
   };
 
   return (

@@ -3,12 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Orchid\Filters\Types\Like;
 use Orchid\Filters\Types\Where;
@@ -17,107 +12,113 @@ use Orchid\Platform\Models\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
 
-    /** @var list<string> */
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'email',
         'password',
         'role',
-        'permissions',
     ];
 
-    /** @var list<string> */
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
     protected $hidden = [
         'password',
         'remember_token',
         'permissions',
     ];
 
-    /** @var array<string, class-string> */
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'permissions' => 'array',
+        'email_verified_at' => 'datetime',
+        'role' => UserRole::class,
+    ];
+
+    /**
+     * The attributes for which you can use filters in url.
+     *
+     * @var array
+     */
     protected $allowedFilters = [
         'id' => Where::class,
         'name' => Like::class,
         'email' => Like::class,
-        'role' => Where::class,
         'updated_at' => WhereDateStartEnd::class,
         'created_at' => WhereDateStartEnd::class,
     ];
 
-    /** @var list<string> */
+    /**
+     * The attributes for which can use sort in url.
+     *
+     * @var array
+     */
     protected $allowedSorts = [
         'id',
         'name',
         'email',
-        'role',
         'updated_at',
         'created_at',
     ];
 
-    protected function casts(): array
+    /**
+     * Get appointments created for this doctor.
+     */
+    public function appointments(): HasMany
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'role' => UserRole::class,
-            'permissions' => 'array',
-        ];
+        return $this->doctorAppointments();
     }
 
-    public function profile(): HasOne
-    {
-        return $this->hasOne(Profile::class);
-    }
-
-    public function doctorProfile(): HasOne
-    {
-        return $this->hasOne(DoctorProfile::class);
-    }
-
-    public function patientAppointments(): HasMany
-    {
-        return $this->hasMany(Appointment::class, 'patient_id');
-    }
-
+    /**
+     * Get appointments where this user is the doctor.
+     */
     public function doctorAppointments(): HasMany
     {
         return $this->hasMany(Appointment::class, 'doctor_id');
     }
 
+    /**
+     * Get appointments where this user is the patient.
+     */
+    public function patientAppointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'patient_id');
+    }
+
+    /**
+     * User profile relationship.
+     */
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    /**
+     * Doctor profile relationship.
+     */
+    public function doctorProfile()
+    {
+        return $this->hasOne(DoctorProfile::class);
+    }
+
+    /**
+     * Doctor schedule rows for this user.
+     */
     public function schedules(): HasMany
     {
         return $this->hasMany(Schedule::class, 'doctor_id');
-    }
-
-    public function scopePatients(Builder $query): void
-    {
-        $query->where('role', UserRole::Patient);
-    }
-
-    public function scopeDoctors(Builder $query): void
-    {
-        $query->where('role', UserRole::Doctor);
-    }
-
-    public function scopeAdmins(Builder $query): void
-    {
-        $query->where('role', UserRole::Admin);
-    }
-
-    public function isPatient(): bool
-    {
-        return $this->role === UserRole::Patient;
-    }
-
-    public function isDoctor(): bool
-    {
-        return $this->role === UserRole::Doctor;
-    }
-
-    public function isAdmin(): bool
-    {
-        return $this->role === UserRole::Admin;
     }
 }

@@ -20,9 +20,9 @@ export function useCancelAppointment() {
       patientApi.cancelAppointment(id, reason),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["patient-appointments"] });
-      toast.success("Запись отменена");
+      toast.success("Qabul bekor qilindi");
     },
-    onError: () => toast.error("Не удалось отменить запись"),
+    onError: () => toast.error("Qabulni bekor qilib bo'lmadi"),
   });
 }
 
@@ -34,9 +34,9 @@ export function useBookAppointment() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["patient-appointments"] });
       qc.invalidateQueries({ queryKey: ["doctor-slots"] });
-      toast.success("Вы записаны!");
+      toast.success("Siz yozildingiz!");
     },
-    onError: () => toast.error("Не удалось записаться"),
+    onError: () => toast.error("Yozib bo'lmadi"),
   });
 }
 
@@ -52,9 +52,9 @@ export function useSubmitReview() {
     }) => patientApi.reviewAppointment(appointmentId, data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["patient-appointments"] });
-      toast.success("Отзыв отправлен!");
+      toast.success("Fikr yuborildi!");
     },
-    onError: () => toast.error("Не удалось отправить отзыв"),
+    onError: () => toast.error("Fikrni yuborib bo'lmadi"),
   });
 }
 
@@ -75,9 +75,9 @@ export function useConfirmAppointment() {
     mutationFn: (id: number) => doctorApi.confirmAppointment(id),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["doctor-appointments"] });
-      toast.success("Приём подтверждён");
+      toast.success("Qabul tasdiqlandi");
     },
-    onError: () => toast.error("Ошибка подтверждения"),
+    onError: () => toast.error("Tasdiqlashda xatolik"),
   });
 }
 
@@ -88,9 +88,9 @@ export function useCompleteAppointment() {
       doctorApi.completeAppointment(id, diagnosis),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["doctor-appointments"] });
-      toast.success("Приём завершён");
+      toast.success("Qabul yakunlandi");
     },
-    onError: () => toast.error("Ошибка завершения"),
+    onError: () => toast.error("Yakunlashda xatolik"),
   });
 }
 
@@ -101,8 +101,8 @@ export function useDoctorCancelAppointment() {
       doctorApi.cancelAppointment(id, reason),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["doctor-appointments"] });
-      toast.success("Запись отменена");
+      toast.success("Qabul bekor qilindi");
     },
-    onError: () => toast.error("Не удалось отменить"),
+    onError: () => toast.error("Bekor qilib bo'lmadi"),
   });
 }

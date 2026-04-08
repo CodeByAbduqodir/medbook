@@ -154,10 +154,8 @@ export interface RegisterCredentials {
 }
 
 export interface AuthResponse {
-  data: {
-    token: string;
-    user: AuthUser;
-  };
+  data: AuthUser;
+  token: string;
 }
 
 // ===== Request payloads =====

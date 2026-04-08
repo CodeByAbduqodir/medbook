@@ -53,9 +53,9 @@ export default function DoctorProfilePage() {
     mutationFn: (data: FormData) => doctorApi.updateProfile(data as Record<string, unknown>),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["doctor-profile-edit"] });
-      toast.success("Профиль обновлён");
+      toast.success("Profil yangilandi");
     },
-    onError: () => toast.error("Ошибка сохранения"),
+    onError: () => toast.error("Saqlashda xatolik"),
   });
 
   const specId = watch("specialization_id");
@@ -66,7 +66,7 @@ export default function DoctorProfilePage() {
   return (
     <PageTransition>
       <div className="max-w-xl mx-auto">
-        <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white mb-6">Мой профиль</h1>
+        <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white mb-6">Mening profilim</h1>
 
         {/* Info card */}
         <motion.div
@@ -101,19 +101,19 @@ export default function DoctorProfilePage() {
         >
           <Card padding="lg">
             <h2 className="font-display font-semibold text-gray-900 dark:text-white mb-5">
-              Профессиональные данные
+              Kasbiy ma'lumotlar
             </h2>
             <form onSubmit={handleSubmit((d) => updateMutation.mutate(d))} className="flex flex-col gap-4">
               <Select
-                label="Специализация"
+                label="Mutaxassislik"
                 options={specOptions}
                 value={specId ?? null}
                 onChange={(v) => setValue("specialization_id", v ? Number(v) : undefined, { shouldDirty: true })}
                 searchable
-                placeholder="Выберите специализацию"
+                placeholder="Mutaxassislikni tanlang"
               />
               <Input
-                label="Стаж (лет)"
+                label="Tajriba (yil)"
                 type="number"
                 min={0}
                 max={60}
@@ -122,11 +122,11 @@ export default function DoctorProfilePage() {
               />
               <div>
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 block">
-                  Bio / О себе
+                  Bio / O'zingiz haqingizda
                 </label>
                 <textarea
                   {...register("bio")}
-                  placeholder="Расскажите о своей специализации, методах лечения, опыте..."
+                  placeholder="Mutaxassisligingiz, davolash usullari va tajribangiz haqida yozing..."
                   rows={4}
                   className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
                 />
@@ -140,7 +140,7 @@ export default function DoctorProfilePage() {
                 disabled={!isDirty}
                 className="mt-2"
               >
-                Сохранить изменения
+                O'zgarishlarni saqlash
               </Button>
             </form>
           </Card>

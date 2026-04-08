@@ -18,9 +18,9 @@ class DoctorController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $query = User::doctors()
-            ->with(['doctorProfile.specialization', 'profile'])
-            ->whereHas('doctorProfile');
+        $query = User::query()
+            ->where('role', UserRole::Doctor->value)
+            ->with(['doctorProfile.specialization', 'profile']);
 
         if ($request->filled('specialization_id')) {
             $query->whereHas('doctorProfile', fn ($q) => $q->where('specialization_id', $request->integer('specialization_id')));

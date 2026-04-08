@@ -41,6 +41,7 @@ export function useSpecializations() {
       const res = await publicApi.getSpecializations();
       return res.data.data as Specialization[];
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 0,
+    refetchOnMount: "always",
   });
 }

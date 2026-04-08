@@ -8,7 +8,7 @@ interface SuccessAnimationProps {
   onComplete?: () => void;
 }
 
-export function SuccessAnimation({ show, message = "Успешно!", onComplete }: SuccessAnimationProps) {
+export function SuccessAnimation({ show, message = "Muvaffaqiyatli!", onComplete }: SuccessAnimationProps) {
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {

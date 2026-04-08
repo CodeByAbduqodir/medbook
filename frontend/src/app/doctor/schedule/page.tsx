@@ -57,8 +57,8 @@ export default function DoctorSchedulePage() {
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white">Расписание</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Настройте рабочие часы для каждого дня</p>
+            <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white">Jadval</h1>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Har bir kun uchun ish soatlarini sozlang</p>
           </div>
           <Button
             variant="gradient"
@@ -68,7 +68,7 @@ export default function DoctorSchedulePage() {
             disabled={!isDirty}
             onClick={handleSave}
           >
-            Сохранить
+            Saqlash
           </Button>
         </div>
 
@@ -99,7 +99,7 @@ export default function DoctorSchedulePage() {
                         {getDayName(day.day_of_week)}
                       </p>
                       <p className={cn("text-xs font-medium mt-0.5", day.is_active ? "text-green-600 dark:text-green-400" : "text-gray-400")}>
-                        {day.is_active ? "Рабочий" : "Выходной"}
+                        {day.is_active ? "Ish kuni" : "Dam olish kuni"}
                       </p>
                     </div>
 

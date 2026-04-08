@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Orchid\Layouts\User;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
-use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Persona;
 use Orchid\Screen\Layouts\Table;
@@ -47,13 +47,13 @@ class UserListLayout extends Table
                     ])),
 
             TD::make('created_at', __('Created'))
-                ->usingComponent(DateTimeSplit::class)
+                ->render(fn (User $user) => Carbon::parse($user->created_at)->toDayDateTimeString())
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()
                 ->sort(),
 
             TD::make('updated_at', __('Last edit'))
-                ->usingComponent(DateTimeSplit::class)
+                ->render(fn (User $user) => Carbon::parse($user->updated_at)->toDayDateTimeString())
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 

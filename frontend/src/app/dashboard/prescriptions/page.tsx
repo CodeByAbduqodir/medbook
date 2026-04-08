@@ -48,7 +48,7 @@ function PrescriptionCard({ prescription, index }: { prescription: Prescription;
           )}
           <div className="flex items-center gap-1.5">
             <Clock size={12} />
-            <span>Курс: {prescription.duration}</span>
+            <span>Davolash kursi: {prescription.duration}</span>
           </div>
         </div>
 
@@ -56,7 +56,7 @@ function PrescriptionCard({ prescription, index }: { prescription: Prescription;
           onClick={() => setExpanded(!expanded)}
           className="flex items-center gap-1 text-xs text-primary-600 dark:text-primary-400 hover:text-primary-700 transition-colors mt-3"
         >
-          {expanded ? <><ChevronUp size={13} />Скрыть инструкцию</> : <><ChevronDown size={13} />Инструкция</>}
+          {expanded ? <><ChevronUp size={13} />Yo'riqnomani yashirish</> : <><ChevronDown size={13} />Yo'riqnoma</>}
         </button>
       </div>
 
@@ -69,11 +69,11 @@ function PrescriptionCard({ prescription, index }: { prescription: Prescription;
             transition={{ duration: 0.22 }}
             className="border-t border-gray-100 dark:border-gray-800 px-5 py-4 bg-gray-50 dark:bg-gray-800/40"
           >
-            <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Инструкция по применению</p>
+            <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Qo'llash bo'yicha yo'riqnoma</p>
             <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{prescription.instructions}</p>
             {prescription.appointment && (
               <p className="text-xs text-gray-400 mt-3">
-                Выписан {formatDate(prescription.appointment.start_time)}
+                Yozilgan sana: {formatDate(prescription.appointment.start_time)}
               </p>
             )}
           </motion.div>
@@ -105,9 +105,9 @@ export default function PrescriptionsPage() {
     <PageTransition>
       <div className="max-w-2xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white">Мои рецепты</h1>
+          <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white">Mening retseptlarim</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            {prescriptions ? `${prescriptions.length} рецептов` : "Загрузка..."}
+            {prescriptions ? `${prescriptions.length} ta retsept` : "Yuklanmoqda..."}
           </p>
         </div>
 
@@ -118,8 +118,8 @@ export default function PrescriptionsPage() {
         ) : !prescriptions?.length ? (
           <EmptyState
             icon={<FileText size={28} />}
-            title="Рецептов нет"
-            description="После завершения приёма врач выпишет рецепты, и они появятся здесь"
+            title="Retseptlar yo'q"
+            description="Qabul yakunlangach, shifokor retsept yozadi va ular shu yerda ko'rinadi"
           />
         ) : (
           <div className="flex flex-col gap-4">

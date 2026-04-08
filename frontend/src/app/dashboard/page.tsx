@@ -58,10 +58,10 @@ function CountdownTimer({ targetTime }: { targetTime: string }) {
     <div className="flex items-center gap-2 mt-3">
       <Timer size={14} className="text-primary-500" />
       <div className="flex gap-1.5">
-        {timeLeft.days > 0 && <TimeBlock value={timeLeft.days} label="дн" />}
-        <TimeBlock value={timeLeft.hours} label="ч" />
-        <TimeBlock value={timeLeft.minutes} label="м" />
-        <TimeBlock value={timeLeft.seconds} label="с" />
+        {timeLeft.days > 0 && <TimeBlock value={timeLeft.days} label="kun" />}
+        <TimeBlock value={timeLeft.hours} label="soat" />
+        <TimeBlock value={timeLeft.minutes} label="daq" />
+        <TimeBlock value={timeLeft.seconds} label="son" />
       </div>
     </div>
   );
@@ -69,10 +69,10 @@ function CountdownTimer({ targetTime }: { targetTime: string }) {
 
 function getGreeting() {
   const h = new Date().getHours();
-  if (h < 6) return "Доброй ночи";
-  if (h < 12) return "Доброе утро";
-  if (h < 18) return "Добрый день";
-  return "Добрый вечер";
+  if (h < 6) return "Xayrli tun";
+  if (h < 12) return "Xayrli tong";
+  if (h < 18) return "Xayrli kun";
+  return "Xayrli kech";
 }
 
 function QuickCard({
@@ -165,9 +165,9 @@ export default function PatientDashboard() {
           className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8"
         >
           {[
-            { label: "Предстоящих записей", value: upcoming.length, color: "text-primary-600 dark:text-primary-400" },
-            { label: "Рецептов", value: prescriptions?.length ?? 0, color: "text-teal-600 dark:text-teal-400" },
-            { label: "Всего записей", value: appointments?.length ?? 0, color: "text-gray-700 dark:text-gray-300" },
+            { label: "Kutilayotgan qabul", value: upcoming.length, color: "text-primary-600 dark:text-primary-400" },
+            { label: "Retseptlar", value: prescriptions?.length ?? 0, color: "text-teal-600 dark:text-teal-400" },
+            { label: "Jami qabul", value: appointments?.length ?? 0, color: "text-gray-700 dark:text-gray-300" },
           ].map(({ label, value, color }) => (
             <motion.div key={label} variants={item}>
               <Card padding="md" className="text-center">
@@ -186,9 +186,9 @@ export default function PatientDashboard() {
           className="mb-8"
         >
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-display font-semibold text-gray-900 dark:text-white">Предстоящие записи</h2>
+            <h2 className="font-display font-semibold text-gray-900 dark:text-white">Kelgusi qabullar</h2>
             <Link href="/dashboard/appointments" className="text-xs text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1">
-              Все <ArrowRight size={12} />
+              Barchasi <ArrowRight size={12} />
             </Link>
           </div>
           {apptLoading ? (
@@ -198,9 +198,9 @@ export default function PatientDashboard() {
           ) : upcoming.length === 0 ? (
             <div className="text-center py-10 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800">
               <Calendar size={32} className="mx-auto text-gray-300 dark:text-gray-600 mb-3" />
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">Нет предстоящих записей</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">Kelgusi qabul yo'q</p>
               <Link href="/doctors">
-                <Button variant="primary" size="sm">Найти врача</Button>
+                <Button variant="primary" size="sm">Shifokor topish</Button>
               </Link>
             </div>
           ) : (
@@ -218,12 +218,12 @@ export default function PatientDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <h2 className="font-display font-semibold text-gray-900 dark:text-white mb-4">Быстрые действия</h2>
+          <h2 className="font-display font-semibold text-gray-900 dark:text-white mb-4">Tezkor amallar</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <QuickCard icon={<Calendar size={22} />} label="Найти врача" description="Записаться на приём" href="/doctors" color="bg-gradient-to-br from-primary-500 to-primary-600" />
-            <QuickCard icon={<FileText size={22} />} label="Мои рецепты" description="Посмотреть назначения" href="/dashboard/prescriptions" color="bg-gradient-to-br from-teal-500 to-teal-600" />
-            <QuickCard icon={<Star size={22} />} label="История визитов" description="Прошедшие записи" href="/dashboard/appointments" color="bg-gradient-to-br from-amber-500 to-amber-600" />
-            <QuickCard icon={<UserCircle size={22} />} label="Мой профиль" description="Настройки аккаунта" href="/dashboard/profile" color="bg-gradient-to-br from-purple-500 to-purple-600" />
+            <QuickCard icon={<Calendar size={22} />} label="Shifokor topish" description="Qabulga yozilish" href="/doctors" color="bg-gradient-to-br from-primary-500 to-primary-600" />
+            <QuickCard icon={<FileText size={22} />} label="Retseptlarim" description="Tayinlovlarni ko'rish" href="/dashboard/prescriptions" color="bg-gradient-to-br from-teal-500 to-teal-600" />
+            <QuickCard icon={<Star size={22} />} label="Qabullar tarixi" description="O'tgan qabullar" href="/dashboard/appointments" color="bg-gradient-to-br from-amber-500 to-amber-600" />
+            <QuickCard icon={<UserCircle size={22} />} label="Mening profilim" description="Akkaunt sozlamalari" href="/dashboard/profile" color="bg-gradient-to-br from-purple-500 to-purple-600" />
           </div>
         </motion.div>
       </div>

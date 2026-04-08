@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
@@ -15,13 +15,13 @@ import { cn } from "@/lib/utils";
 import toast from "react-hot-toast";
 
 const schema = z.object({
-  name: z.string().min(2, "Минимум 2 символа"),
-  email: z.string().email("Некорректный email"),
-  password: z.string().min(8, "Минимум 8 символов"),
+  name: z.string().min(2, "Kamida 2 ta belgi"),
+  email: z.string().email("Noto'g'ri email"),
+  password: z.string().min(8, "Kamida 8 ta belgi"),
   password_confirmation: z.string(),
   role: z.enum(["patient", "doctor"]),
 }).refine((d) => d.password === d.password_confirmation, {
-  message: "Пароли не совпадают",
+  message: "Parollar mos kelmadi",
   path: ["password_confirmation"],
 });
 type FormData = z.infer<typeof schema>;
@@ -32,7 +32,7 @@ function PasswordStrength({ password }: { password: string }) {
     : password.length < 8 ? 2
     : /[A-Z]/.test(password) && /[0-9]/.test(password) ? 4 : 3;
 
-  const labels = ["", "Слабый", "Средний", "Хороший", "Отличный"];
+  const labels = ["", "Zaif", "O'rtacha", "Yaxshi", "A'lo"];
   const colors = ["", "bg-red-400", "bg-amber-400", "bg-teal-400", "bg-green-500"];
 
   if (!password) return null;
@@ -76,8 +76,13 @@ function RegisterForm() {
   const role = watch("role");
   const password = watch("password") ?? "";
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/dashboard");
+    }
+  }, [isAuthenticated, router]);
+
   if (isAuthenticated) {
-    router.replace("/dashboard");
     return null;
   }
 
@@ -86,14 +91,14 @@ function RegisterForm() {
       await authRegister(data);
       router.push(data.role === "doctor" ? "/doctor" : "/dashboard");
     } catch {
-      toast.error("Ошибка регистрации. Попробуйте ещё раз.");
+      toast.error("Ro'yxatdan o'tishda xatolik. Qayta urinib ko'ring.");
     }
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2">
+    <div className="min-h-screen grid lg:grid-cols-2 bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300">
       {/* Left: Decoration */}
-      <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-teal-600 via-teal-700 to-primary-700 relative overflow-hidden order-last lg:order-first">
+      <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-teal-500 via-teal-600 to-primary-600 relative overflow-hidden order-last lg:order-first">
         <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%">
             <defs>
@@ -116,16 +121,16 @@ function RegisterForm() {
           <div className="w-20 h-20 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-6">
             <Stethoscope size={36} className="text-white" />
           </div>
-          <h2 className="text-2xl font-display font-bold mb-4">Присоединяйтесь к MedBook</h2>
+          <h2 className="text-2xl font-display font-bold mb-4">MedBook'ga qo'shiling</h2>
           <p className="text-white/80 text-sm leading-relaxed">
-            Более 1200 пациентов уже используют MedBook для записи к врачам онлайн. Присоединяйтесь!
+            1200 dan ortiq bemorlar allaqachon MedBook orqali shifokorlarga onlayn yozilmoqda. Siz ham qo'shiling!
           </p>
           <div className="mt-8 grid grid-cols-2 gap-4">
             {[
-              { value: "50+", label: "Врачей" },
-              { value: "4.9★", label: "Рейтинг" },
-              { value: "2мин", label: "Запись" },
-              { value: "24/7", label: "Доступно" },
+              { value: "50+", label: "Shifokorlar" },
+              { value: "4.9★", label: "Reyting" },
+              { value: "2 daq", label: "Yozilish" },
+              { value: "24/7", label: "Doim ochiq" },
             ].map((s) => (
               <div key={s.label} className="bg-white/15 rounded-xl py-3 px-4 text-center">
                 <p className="text-lg font-bold">{s.value}</p>
@@ -137,7 +142,7 @@ function RegisterForm() {
       </div>
 
       {/* Right: Form */}
-      <div className="flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-12">
+      <div className="flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-12 bg-white dark:bg-gray-950">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -152,10 +157,10 @@ function RegisterForm() {
           </Link>
 
           <h1 className="text-3xl font-display font-bold text-gray-900 dark:text-white mb-2">
-            Создать аккаунт
+            Akkaunt yaratish
           </h1>
           <p className="text-gray-500 dark:text-gray-400 mb-8">
-            Заполните форму и начните пользоваться сервисом
+            Formani to'ldiring va xizmatdan foydalanishni boshlang
           </p>
 
           {/* Role tabs */}
@@ -173,15 +178,15 @@ function RegisterForm() {
                 )}
               >
                 {r === "patient" ? <User size={15} /> : <Stethoscope size={15} />}
-                {r === "patient" ? "Пациент" : "Врач"}
+                {r === "patient" ? "Bemor" : "Shifokor"}
               </button>
             ))}
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <Input
-              label="Имя и фамилия"
-              placeholder="Иван Иванов"
+              label="Ism va familiya"
+              placeholder="Ali Valiyev"
               leftIcon={<User size={16} />}
               error={errors.name?.message}
               {...register("name")}
@@ -196,9 +201,9 @@ function RegisterForm() {
             />
             <div>
               <Input
-                label="Пароль"
+                label="Parol"
                 type={showPassword ? "text" : "password"}
-                placeholder="Минимум 8 символов"
+                placeholder="Kamida 8 ta belgi"
                 leftIcon={<Lock size={16} />}
                 rightIcon={
                   <button
@@ -215,9 +220,9 @@ function RegisterForm() {
               <PasswordStrength password={password} />
             </div>
             <Input
-              label="Подтверждение пароля"
+              label="Parolni tasdiqlash"
               type="password"
-              placeholder="Повторите пароль"
+              placeholder="Parolni qayta kiriting"
               leftIcon={<Lock size={16} />}
               error={errors.password_confirmation?.message}
               {...register("password_confirmation")}
@@ -232,14 +237,14 @@ function RegisterForm() {
               rightIcon={<ArrowRight size={18} />}
               className="mt-2"
             >
-              Зарегистрироваться
+              Ro'yxatdan o'tish
             </Button>
           </form>
 
           <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
-            Уже есть аккаунт?{" "}
+            Akkauntingiz bormi?{" "}
             <Link href="/login" className="font-medium text-primary-600 dark:text-primary-400 hover:underline">
-              Войти
+              Kirish
             </Link>
           </p>
         </motion.div>

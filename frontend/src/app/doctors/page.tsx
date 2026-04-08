@@ -53,14 +53,14 @@ function DoctorCard({ doctor, index }: { doctor: Doctor; index: number }) {
             <span className="text-sm font-bold text-gray-800 dark:text-gray-200">
               {rating > 0 ? formatRating(rating) : "—"}
             </span>
-            <span className="text-xs text-gray-400">рейтинг</span>
+              <span className="text-xs text-gray-400">reyting</span>
+            </div>
           </div>
-        </div>
       </div>
 
       <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-3">
         <Briefcase size={13} className="text-gray-400 shrink-0" />
-        <span>{pluralize(exp, "год опыта", "года опыта", "лет опыта")}</span>
+        <span>{pluralize(exp, "yil tajriba", "yil tajriba", "yil tajriba")}</span>
       </div>
 
       {(doctor.bio ?? profile?.bio) && (
@@ -77,7 +77,7 @@ function DoctorCard({ doctor, index }: { doctor: Doctor; index: number }) {
           leftIcon={<Calendar size={14} />}
           className="group-hover:bg-primary-600 group-hover:text-white group-hover:border-primary-600 transition-all duration-300"
         >
-          Записаться
+          Yozilish
         </Button>
       </Link>
     </motion.div>
@@ -101,12 +101,12 @@ function DoctorsContent() {
   });
 
   const specOptions = [
-    { value: "", label: "Все специальности" },
+    { value: "", label: "Barcha mutaxassisliklar" },
     ...(specializations ?? []).map((s) => ({ value: s.id, label: s.name })),
   ];
 
   const ratingOptions = [
-    { value: "", label: "Любой рейтинг" },
+    { value: "", label: "Istalgan reyting" },
     { value: 4, label: "4.0+" },
     { value: 4.5, label: "4.5+" },
     { value: 4.8, label: "4.8+" },
@@ -128,10 +128,10 @@ function DoctorsContent() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-3xl font-display font-bold text-gray-900 dark:text-white mb-2">
-              Найдите врача
+              Shifokor toping
             </h1>
             <p className="text-gray-500 dark:text-gray-400">
-              {doctors ? `${doctors.length} специалистов` : "Поиск специалистов..."}
+              {doctors ? `${doctors.length} mutaxassis` : "Mutaxassislar qidirilmoqda..."}
             </p>
           </motion.div>
         </div>
@@ -146,7 +146,7 @@ function DoctorsContent() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Поиск по имени..."
+              placeholder="Ism bo'yicha qidirish..."
               className="w-full h-10 pl-10 pr-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
             />
           </div>
@@ -158,7 +158,7 @@ function DoctorsContent() {
               onChange={(v) => setSpecId(v ? Number(v) : null)}
               searchable
               clearable
-              placeholder="Специализация"
+              placeholder="Mutaxassislik"
             />
           </div>
 
@@ -167,13 +167,13 @@ function DoctorsContent() {
               options={ratingOptions}
               value={ratingMin ?? ""}
               onChange={(v) => setRatingMin(v ? Number(v) : null)}
-              placeholder="Рейтинг"
+              placeholder="Reyting"
             />
           </div>
 
           {hasFilters && (
             <Button variant="ghost" size="md" leftIcon={<X size={15} />} onClick={resetFilters}>
-              Сбросить
+              Tozalash
             </Button>
           )}
         </div>
@@ -183,7 +183,7 @@ function DoctorsContent() {
           <div className="flex flex-wrap gap-2 mb-6">
             {search && (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-50 dark:bg-primary-950/50 text-primary-700 dark:text-primary-300 text-xs font-medium border border-primary-200 dark:border-primary-800">
-                Поиск: &ldquo;{search}&rdquo;
+                Qidiruv: &ldquo;{search}&rdquo;
                 <button onClick={() => setSearch("")}><X size={11} /></button>
               </span>
             )}
@@ -195,7 +195,7 @@ function DoctorsContent() {
             )}
             {ratingMin && (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 text-xs font-medium border border-amber-200 dark:border-amber-800">
-                Рейтинг {ratingMin}+
+                Reyting {ratingMin}+
                 <button onClick={() => setRatingMin(null)}><X size={11} /></button>
               </span>
             )}
@@ -210,9 +210,9 @@ function DoctorsContent() {
         ) : !doctors?.length ? (
           <EmptyState
             icon={<Search size={28} />}
-            title="Врачи не найдены"
-            description="Попробуйте изменить параметры поиска или сбросить фильтры"
-            action={{ label: "Сбросить фильтры", onClick: resetFilters }}
+            title="Shifokor topilmadi"
+            description="Qidiruv parametrlarini o'zgartirib ko'ring yoki filtrlarni tozalang"
+            action={{ label: "Filtrlarni tozalash", onClick: resetFilters }}
           />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">

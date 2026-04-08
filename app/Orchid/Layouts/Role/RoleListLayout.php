@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Orchid\Layouts\Role;
 
+use Carbon\Carbon;
 use Orchid\Platform\Models\Role;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
@@ -37,13 +37,13 @@ class RoleListLayout extends Table
                 ->filter(Input::make()),
 
             TD::make('created_at', __('Created'))
-                ->usingComponent(DateTimeSplit::class)
+                ->render(fn (Role $role) => Carbon::parse($role->created_at)->toDayDateTimeString())
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()
                 ->sort(),
 
             TD::make('updated_at', __('Last edit'))
-                ->usingComponent(DateTimeSplit::class)
+                ->render(fn (Role $role) => Carbon::parse($role->updated_at)->toDayDateTimeString())
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
         ];

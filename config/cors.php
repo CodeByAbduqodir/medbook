@@ -17,6 +17,8 @@ return [
         'http://localhost:3001',
         'http://127.0.0.1:3000',
         'http://medbook.test',
+        'http://medbook.test:3000',
+        'http://medbook.test:3001',
         'https://medbook.test',
     ],
 

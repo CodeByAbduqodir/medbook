@@ -1,18 +1,18 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
-import { ru } from "date-fns/locale";
+import { uz } from "date-fns/locale";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function formatDate(date: string, pattern = "d MMMM yyyy"): string {
-  return format(parseISO(date), pattern, { locale: ru });
+  return format(parseISO(date), pattern, { locale: uz });
 }
 
 export function formatDateTime(date: string): string {
-  return format(parseISO(date), "d MMMM yyyy, HH:mm", { locale: ru });
+  return format(parseISO(date), "d MMMM yyyy, HH:mm", { locale: uz });
 }
 
 export function formatTime(date: string): string {
@@ -20,20 +20,20 @@ export function formatTime(date: string): string {
 }
 
 export function formatRelative(date: string): string {
-  return formatDistanceToNow(parseISO(date), { addSuffix: true, locale: ru });
+  return formatDistanceToNow(parseISO(date), { addSuffix: true, locale: uz });
 }
 
 export const DAY_NAMES = [
-  "Воскресенье",
-  "Понедельник",
-  "Вторник",
-  "Среда",
-  "Четверг",
-  "Пятница",
-  "Суббота",
+  "Yakshanba",
+  "Dushanba",
+  "Seshanba",
+  "Chorshanba",
+  "Payshanba",
+  "Juma",
+  "Shanba",
 ];
 
-export const DAY_NAMES_SHORT = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+export const DAY_NAMES_SHORT = ["Ya", "Du", "Se", "Cho", "Pa", "Ju", "Sh"];
 
 export function getDayName(dayOfWeek: number, short = false): string {
   return short ? DAY_NAMES_SHORT[dayOfWeek] : DAY_NAMES[dayOfWeek];
@@ -126,10 +126,10 @@ export function getStatusColor(
 
 export function getStatusLabel(status: string): string {
   const labels: Record<string, string> = {
-    pending: "Ожидает",
-    confirmed: "Подтверждён",
-    completed: "Завершён",
-    cancelled: "Отменён",
+    pending: "Kutilmoqda",
+    confirmed: "Tasdiqlangan",
+    completed: "Yakunlangan",
+    cancelled: "Bekor qilingan",
   };
   return labels[status] || status;
 }

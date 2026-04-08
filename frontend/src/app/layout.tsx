@@ -18,15 +18,15 @@ const syne = Syne({
 
 export const metadata: Metadata = {
   title: {
-    default: "MedBook — Запись к врачу онлайн",
+    default: "MedBook — Shifokorga onlayn yozilish",
     template: "%s | MedBook",
   },
   description:
-    "Запишитесь к лучшим врачам онлайн. Удобное расписание, мгновенное подтверждение, рецепты в личном кабинете.",
-  keywords: ["врач", "запись к врачу", "онлайн", "медицина", "здоровье"],
+    "Eng yaxshi shifokorlarga onlayn yoziling. Qulay jadval, tezkor tasdiq va shaxsiy kabinetdagi retseptlar.",
+  keywords: ["shifokor", "qabul", "onlayn", "tibbiyot", "sog'liq"],
   openGraph: {
     type: "website",
-    locale: "ru_RU",
+    locale: "uz_UZ",
     siteName: "MedBook",
   },
 };
@@ -37,8 +37,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" suppressHydrationWarning>
-      <body className={`${inter.variable} ${syne.variable} font-sans`}>
+    <html lang="uz" suppressHydrationWarning>
+      <body className={`${inter.variable} ${syne.variable} font-sans transition-colors duration-300 bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100`}>
         <Providers>{children}</Providers>
       </body>
     </html>
